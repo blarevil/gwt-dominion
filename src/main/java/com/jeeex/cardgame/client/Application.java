@@ -1,23 +1,22 @@
 package com.jeeex.cardgame.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootPanel;
-
+import com.jeeex.cardgame.client.init.ClientInjector;
+import com.jeeex.cardgame.client.ui.MainPanel;
 
 /**
- * Entry point classes define <code>onModuleLoad()</code>.
+ * The entry point.
+ * 
+ * @author jeeyoung Kim
+ * @since 2010-05-12
  */
-public class Application
-    implements EntryPoint
-{
+public class Application implements EntryPoint {
+	ClientInjector injector = GWT.create(ClientInjector.class);
 
-  /**
-   * This is the entry point method.
-   */
-  public void onModuleLoad()
-  {
-     final Label label = new Label ( "gwt-maven-plugin Archetype :: Project org.codehaus.mojo.gwt-maven-plugin" );
-     RootPanel.get().add( label );
-  }
+	public void onModuleLoad() {
+		MainPanel panel = injector.mainPanel();
+		RootPanel.get().add(panel);
+	}
 }

@@ -1,14 +1,8 @@
-/** Add css rules here for your application. */
-
-button {
-  display: block;
-  font-size: 16pt
+BODY {
+	width: 100%;
+	height: 100%;
 }
 
-.widePanel {
-  width: 100%
-}
-
-img {
-  margin-top: 20px;
+HTMl {
+	height: 100%;
 }
