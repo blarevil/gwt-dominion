@@ -4,5 +4,9 @@
 	height: 56px;
 	border-width: 2px;
 	border-style: solid;
-	font-size: 10px;
+}
+
+.cardsize {
+	width: 36px;
+	height: 56px;
 }

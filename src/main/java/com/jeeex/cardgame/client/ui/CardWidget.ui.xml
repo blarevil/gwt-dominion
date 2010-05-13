@@ -1,6 +1,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with field='res' type='com.jeeex.cardgame.client.res.DefaultResource' />
 	<g:DockLayoutPanel>
+		<g:north size="10">
+			<g:Label>NAME</g:Label>
+		</g:north>
 	</g:DockLayoutPanel>
 </ui:UiBinder>
