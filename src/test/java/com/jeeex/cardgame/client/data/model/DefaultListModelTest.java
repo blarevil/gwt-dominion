@@ -1,7 +1,5 @@
 package com.jeeex.cardgame.client.data.model;
 
-import javax.naming.event.EventContext;
-
 import org.easymock.Capture;
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;

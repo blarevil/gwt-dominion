@@ -8,8 +8,7 @@ public class ListEvent extends GwtEvent<ListHandler> {
 		ADD, REMOVE
 	}
 
-	public static final GwtEvent.Type<ListHandler> TYPE = new GwtEvent.Type<ListHandler>() {
-	};
+	public static final GwtEvent.Type<ListHandler> TYPE = new GwtEvent.Type<ListHandler>();
 
 	private final Type eventType;
 

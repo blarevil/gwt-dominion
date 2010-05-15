@@ -2,12 +2,14 @@ package com.jeeex.cardgame.client.ui;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.jeeex.cardgame.client.data.Card;
-import com.jeeex.cardgame.client.res.DefaultResource.Style;
+import com.jeeex.cardgame.client.res.DefaultResource.MyStyle;
 
 public class CardWidget extends Composite {
 
@@ -18,6 +20,9 @@ public class CardWidget extends Composite {
 
 	Card card;
 
+	@UiField
+	Label cardName;
+
 	@Inject
 	public CardWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -25,14 +30,15 @@ public class CardWidget extends Composite {
 
 	public void setCard(Card card) {
 		this.card = card;
+		this.cardName.setText(card.getName());
 	}
 
 	public static class Factory {
 		private final Provider<CardWidget> provider;
-		private final Style style;
+		private final MyStyle style;
 
 		@Inject
-		public Factory(Provider<CardWidget> provider, Style style) {
+		public Factory(Provider<CardWidget> provider, MyStyle style) {
 			this.provider = provider;
 			this.style = style;
 		}

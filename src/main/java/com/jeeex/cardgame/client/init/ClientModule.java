@@ -4,8 +4,8 @@ import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.jeeex.cardgame.client.res.DefaultResource;
-import com.jeeex.cardgame.client.res.DefaultResource.Style;
-import com.jeeex.cardgame.client.ui.MainPanel;
+import com.jeeex.cardgame.client.res.DefaultResource.MyStyle;
+import com.jeeex.cardgame.client.ui.MainView;
 
 public class ClientModule extends AbstractGinModule {
 
@@ -13,12 +13,12 @@ public class ClientModule extends AbstractGinModule {
 
 	@Override
 	protected void configure() {
-		bind(MainPanel.class).in(Singleton.class);
+		bind(MainView.class).in(Singleton.class);
 		bind(DefaultResource.class).in(SINGLETON);
 	}
 
 	@Provides
-	public Style getMyStyle(DefaultResource res) {
+	public MyStyle getMyStyle(DefaultResource res) {
 		return res.style();
 	}
 }
