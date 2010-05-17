@@ -15,7 +15,7 @@ public class CardConstants {
 	public static final VictoryCard ESTATE =
 		new ConcreteVictoryPointCard("Estate", 2, 1);
 	public static final VictoryCard DUCHY = 
-		new ConcreteVictoryPointCard("DUCHY", 5, 3);
+		new ConcreteVictoryPointCard("Duchy", 5, 3);
 	public static final VictoryCard PROVINCE = 
 		new ConcreteVictoryPointCard("Province", 8, 6);
 

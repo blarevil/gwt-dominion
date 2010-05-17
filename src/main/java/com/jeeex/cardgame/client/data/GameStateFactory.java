@@ -1,5 +1,6 @@
 package com.jeeex.cardgame.client.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,14 @@ public class GameStateFactory implements Provider<GameState> {
 		GameState gs = new GameState();
 		gs.buyPile = buyPile();
 		gs.defaultPile = defaultPile();
+		gs.players = new ArrayList<Player>();
+
+		String [] names = {"Woongbin", "Minsang", "Jeeyoung", "Halley"};
+		for(int i = 0 ; i < 4; i++){
+			Player p = new Player();
+			p.setName(names[i]);
+			gs.players.add(p);
+		}
 		return gs;
 	}
 

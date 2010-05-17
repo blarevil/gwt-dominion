@@ -12,7 +12,22 @@ public class CardPile {
 		this.card = card;
 		this.number = number;
 	}
+
 	public Card getCard() {
 		return card;
+	}
+
+	@Override
+	public String toString() {
+		return card.getName() + ":" + number;
+	}
+
+	public Card takeOne() {
+		number--;
+		return this.card;
+	}
+
+	public void addCard() {
+		number++;
 	}
 }

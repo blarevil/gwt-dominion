@@ -1,7 +1,7 @@
 package com.jeeex.cardgame.client.data;
 
 /** An immutable data structure, representing the card. */
-public class CardImpl implements Card{
+public class CardImpl implements Card {
 	public CardImpl(String name, String description, int cost) {
 		assert cost >= 0;
 		assert name != null;
@@ -45,5 +45,9 @@ public class CardImpl implements Card{
 	/** Returns false. other cards should override this method. */
 	public boolean isVictoryPoint() {
 		return false;
+	}
+
+	public String toString() {
+		return name;
 	}
 }
