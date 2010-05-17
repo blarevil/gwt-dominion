@@ -12,8 +12,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 @Entity
 @Inheritance(strategy = SINGLE_TABLE)
 public class Message implements IsSerializable {
-	@Id
-	@GeneratedValue
+	@Id @GeneratedValue
 	private Long id;
 
 	public Long getId() {

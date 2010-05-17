@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.jeeex.cardgame.client.data.CardImpl;
 import com.jeeex.cardgame.client.data.Card;
 import com.jeeex.cardgame.client.res.DefaultResource.MyStyle;
 import com.jeeex.cardgame.client.ui.CardWidget.Factory;
@@ -71,8 +72,7 @@ public class HandPanel extends Composite {
 	}
 
 	public CardWidget makeCard(String name) {
-		Card card = new Card();
-		card.setName(name);
+		Card card = new CardImpl(name, "", 0);
 		CardWidget wgt = factory.get(card);
 		style.ensureInjected();
 		return wgt;

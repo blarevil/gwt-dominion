@@ -1,25 +1,21 @@
 package com.jeeex.cardgame.client.data;
 
-/** An immutable data structure, representing the card. */
-public class Card {
-	/** Name of the card. */
-	String name;
-	/** Description. */
-	String description;
+public interface Card {
 
-	public String getName() {
-		return name;
-	}
+	public abstract String getName();
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	/** Returns false. other cards should override this method. */
+	public abstract boolean isAction();
 
-	public String getDescription() {
-		return description;
-	}
+	/**
+	 * Returns false. other cards should override this method.
+	 * <p>
+	 * If this value is true, then this class is an implementation of
+	 * {@link TreasureCard}.
+	 */
+	public abstract boolean isTreasure();
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+	/** Returns false. other cards should override this method. */
+	public abstract boolean isVictoryPoint();
+
 }
