@@ -91,8 +91,23 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.googlecode.mvp4g</groupId>
+			<artifactId>mvp4g</artifactId>
+			<version>1.2.0-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<!--
+			Java concurrency in practice annotations. 
+			Used for documentation purposes.
+			 -->
+			<groupId>net.jcip</groupId>
+			<artifactId>jcip-annotations</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
-
 	<build>
 		<outputDirectory>war/WEB-INF/classes</outputDirectory>
 		<plugins>
@@ -132,8 +147,8 @@
 	</build>
 	<repositories>
 		<repository>
-			<id>Java.net</id>
-			<url>https://maven2-repository.dev.java.net/</url>
+			<id>MVP4G-snapshot</id>
+			<url>https://mvp4g.googlecode.com/svn/maven2/snapshots/</url>
 		</repository>
 	</repositories>
 </project>

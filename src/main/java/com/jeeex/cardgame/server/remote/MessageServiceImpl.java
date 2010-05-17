@@ -1,8 +1,5 @@
 package com.jeeex.cardgame.server.remote;
 
-import javax.persistence.EntityManager;
-
-import com.google.inject.Inject;
 import com.jeeex.cardgame.shared.remote.MessageService;
 import com.jeeex.cardgame.shared.remote.SendMessageRequest;
 import com.jeeex.cardgame.shared.remote.SendMessageResponse;

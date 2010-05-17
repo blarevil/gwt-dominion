@@ -1,14 +1,12 @@
 package com.jeeex.cardgame.client.ui;
 
-import com.google.gwt.user.client.ui.HasText;
-import com.jeeex.cardgame.client.data.model.HandlerEndpoint;
-import com.jeeex.cardgame.client.ui.chat.ChatHandler;
+import com.google.gwt.user.client.ui.TextArea;
 
 public interface ChatView {
 
 	public void appendChatMessage(String message);
 
-	public HandlerEndpoint<ChatHandler> chatEndpoint();
+	public TextArea getChatMessageArea();
 
-	public HasText getChatMessage();
+	public TextArea getChatHistoryArea();
 }

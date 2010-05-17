@@ -1,14 +1,16 @@
 package com.jeeex.cardgame.shared.remote;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.jeeex.cardgame.annotation.GwtConstructor;
 
 public class WaitForMessageRequest implements IsSerializable {
 
-	long prevcounter;
+	private long prevcounter;
 
-	String queueId;
+	private String queueId;
 
 	@SuppressWarnings("unused")
+	@GwtConstructor
 	private WaitForMessageRequest() {
 	}
 
@@ -16,4 +18,7 @@ public class WaitForMessageRequest implements IsSerializable {
 		this.prevcounter = prevcounter;
 	}
 
+	public long getPrevcounter() {
+		return prevcounter;
+	}
 }

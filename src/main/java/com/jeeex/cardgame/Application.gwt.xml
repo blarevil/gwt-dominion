@@ -2,9 +2,9 @@
 <module>
 	<inherits name='com.google.gwt.user.User' />
 	<inherits name='com.google.gwt.user.theme.standard.Standard' />
-	<inherits name="com.google.gwt.inject.Inject"/>
+	<inherits name="com.google.gwt.inject.Inject" />
 	<entry-point class='com.jeeex.cardgame.client.Application' />
-	<source path="shared"/>
-	<source path="client"/>
+	<source path="shared" />
+	<source path="client" />
 	<stylesheet src='Application.css' />
 </module>

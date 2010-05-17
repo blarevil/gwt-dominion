@@ -43,7 +43,7 @@ public class InjectedApplication implements Runnable {
 			@Override
 			public void run() {
 				loop.setCounter(0);
-				loop.run();
+				// loop.run();
 			}
 		};
 

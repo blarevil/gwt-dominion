@@ -1,8 +1,8 @@
 package com.jeeex.cardgame.server.servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +15,6 @@ import com.google.gwt.user.server.rpc.RPCRequest;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 @Singleton
@@ -24,9 +23,6 @@ public class GuiceRemoteServlet extends RemoteServiceServlet {
 
 	@Inject
 	private Injector injector;
-
-	@Inject
-	private Provider<EntityManager> emp;
 
 	@Override
 	public String processCall(String payload) throws SerializationException {
@@ -50,9 +46,9 @@ public class GuiceRemoteServlet extends RemoteServiceServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		resp.getWriter().println("OK");
-		resp.getWriter().println("em is " + emp.get());
-		resp.getWriter().flush();
+		PrintWriter w = resp.getWriter();
+		w.println("OK");
+		w.flush();
 	}
 
 	@SuppressWarnings("unchecked")

@@ -1,5 +1,6 @@
 package com.jeeex.cardgame.client.init;
 
+import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -20,5 +21,10 @@ public class ClientModule extends AbstractGinModule {
 	@Provides
 	public MyStyle getMyStyle(DefaultResource res) {
 		return res.style();
+	}
+
+	@Provides
+	public HandlerManager getDefaultManager() {
+		return new HandlerManager(null);
 	}
 }
