@@ -10,5 +10,4 @@ public class RemoteServiceModule extends AbstractModule {
 	protected void configure() {
 		bind(MessageService.class).to(MessageServiceImpl.class);
 	}
-
 }

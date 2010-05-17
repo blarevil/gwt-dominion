@@ -6,22 +6,20 @@ import javax.persistence.Persistence;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import com.google.inject.Singleton;
-import com.google.inject.servlet.RequestScoped;
-import com.jeeex.cardgame.server.entitymanager.EntityManagerProvider;
 
-public class PersistenceModule extends AbstractModule {
+public class TestPersistenceModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(EntityManager.class)
-			.toProvider(EntityManagerProvider.class)
-			.in(RequestScoped.class);
+	}
+	
+	@Provides
+	public EntityManagerFactory getEMF() {
+		return Persistence.createEntityManagerFactory("testdb");
 	}
 
 	@Provides
-	@Singleton
-	public EntityManagerFactory getEMF() {
-		return Persistence.createEntityManagerFactory("testdb");
+	public EntityManager getEntityManager(EntityManagerFactory emf) {
+		return emf.createEntityManager();
 	}
 }

@@ -1,5 +1,6 @@
 package com.jeeex.cardgame.client.data.msgloop;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
@@ -12,22 +13,21 @@ public class MessageLoop implements Runnable {
 	public class Callback implements AsyncCallback<WaitForMessageResponse> {
 		@Override
 		public void onFailure(Throwable caught) {
-			running = false;
 			Window.alert("Failure during XHR - terminating.");
 		}
 
 		@Override
 		public void onSuccess(WaitForMessageResponse result) {
 			// success is good.
+			GWT.log("FOO");
+			counter++;
 			async.waitForMessage(new WaitForMessageRequest(counter), callback);
 		}
 	}
 
 	private final Callback callback;
 
-	boolean running = true;
-
-	private long counter = 0;
+	private long counter = 1;
 
 	@Inject
 	private MessageServiceAsync async;

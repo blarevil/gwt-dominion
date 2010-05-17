@@ -3,9 +3,19 @@ package com.jeeex.cardgame.shared.remote;
 import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.jeeex.cardgame.shared.remote.msg.Message;
+import com.jeeex.cardgame.annotation.GwtConstructor;
+import com.jeeex.cardgame.shared.remote.entity.Message;
 
 public class WaitForMessageResponse implements IsSerializable {
+
+	@GwtConstructor
+	@SuppressWarnings("unused")
+	private WaitForMessageResponse() {
+	}
+
+	public WaitForMessageResponse(ArrayList<Message> msgs) {
+		this.msgs = msgs;
+	}
 
 	ArrayList<Message> msgs;
 
@@ -16,5 +26,9 @@ public class WaitForMessageResponse implements IsSerializable {
 				return (T) msg;
 		}
 		return null;
+	}
+
+	public ArrayList<Message> getMessages(){
+		return msgs;
 	}
 }

@@ -1,13 +1,26 @@
 package com.jeeex.cardgame.server.logic;
 
-import java.util.Map;
+import java.util.logging.Logger;
 
-import com.jeeex.cardgame.shared.remote.msg.Message;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
+import com.google.inject.Inject;
+import com.google.inject.servlet.RequestScoped;
+import com.jeeex.cardgame.shared.remote.entity.Message;
+
+@RequestScoped
 public class MessageSource {
-	Map<Long, Message> map;
+
+	@Inject
+	Logger logger;
+
+	@Inject
+	EntityManager em;
 
 	public Message getMessage(long counter) {
-		return map.get(counter);
+		Query q = em.createQuery("SELECT msg FROM Message msg WHERE msg.id = :counter");
+		q.setParameter("counter", counter);
+		return (Message) q.getSingleResult();
 	}
 }

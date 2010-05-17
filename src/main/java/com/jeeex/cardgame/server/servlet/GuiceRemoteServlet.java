@@ -2,6 +2,8 @@ package com.jeeex.cardgame.server.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +39,7 @@ public class GuiceRemoteServlet extends RemoteServiceServlet {
 					+ " in the processCall(String) method.", ex);
 			return RPC.encodeResponseForFailure(null, ex);
 		} catch (RuntimeException ex) {
+			injector.getInstance(Logger.class).log(Level.WARNING, "Unexpected error.", ex);
 			// other runtime exceptions - at least log them.
 			log("Unexpected exception occurred.", ex);
 			return RPC.encodeResponseForFailure(null, ex);

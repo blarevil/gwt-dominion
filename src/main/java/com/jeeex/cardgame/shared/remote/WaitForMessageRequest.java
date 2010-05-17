@@ -5,9 +5,8 @@ import com.jeeex.cardgame.annotation.GwtConstructor;
 
 public class WaitForMessageRequest implements IsSerializable {
 
-	private long prevcounter;
-
-	private String queueId;
+	/** Id of the next message. */
+	private long nextMessage;
 
 	@SuppressWarnings("unused")
 	@GwtConstructor
@@ -15,10 +14,10 @@ public class WaitForMessageRequest implements IsSerializable {
 	}
 
 	public WaitForMessageRequest(long prevcounter) {
-		this.prevcounter = prevcounter;
+		this.nextMessage = prevcounter;
 	}
 
-	public long getPrevcounter() {
-		return prevcounter;
+	public long getNextMessage() {
+		return nextMessage;
 	}
 }

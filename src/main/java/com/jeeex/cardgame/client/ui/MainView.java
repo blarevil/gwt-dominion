@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.jeeex.cardgame.client.event.MyEventBus;
 
 public class MainView extends Composite implements ChatView {
 	private static Binder uiBinder = GWT.create(Binder.class);

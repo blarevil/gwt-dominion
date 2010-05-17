@@ -66,11 +66,6 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.4.0.GA</version>
-		</dependency>
-		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.12</version>
@@ -100,9 +95,9 @@
 		</dependency>
 		<dependency>
 			<!--
-			Java concurrency in practice annotations. 
-			Used for documentation purposes.
-			 -->
+				Java concurrency in practice annotations. Used for documentation
+				purposes.
+			-->
 			<groupId>net.jcip</groupId>
 			<artifactId>jcip-annotations</artifactId>
 			<version>1.0</version>
@@ -125,7 +120,9 @@
 					</execution>
 				</executions>
 				<configuration>
+					<extraJvmArgs>-Xmx512m -Djava.util.logging.config.file=logging.ini</extraJvmArgs>
 					<runTarget>com.jeeex.cardgame.Application/Application.html</runTarget>
+					<debugSuspend>false</debugSuspend>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -142,6 +139,26 @@
 				<configuration>
 					<webappDirectory>war</webappDirectory>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>war</directory>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
