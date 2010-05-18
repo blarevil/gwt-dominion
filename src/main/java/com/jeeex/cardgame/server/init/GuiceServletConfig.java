@@ -23,7 +23,7 @@ public class GuiceServletConfig extends GuiceServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 		super.contextDestroyed(servletContextEvent);
-		// TODO(Jeeyoung Kim) - refactor the teardown methods.
+		// TODO(Jeeyoung Kim) Refactor the teardown methods.
 		injector.getInstance(EntityManagerFactory.class).close();
 	}
 }

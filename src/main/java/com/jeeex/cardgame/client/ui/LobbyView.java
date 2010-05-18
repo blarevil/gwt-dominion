@@ -11,5 +11,4 @@ public class LobbyView extends Composite{
 
 	interface Binder extends UiBinder<Widget, LobbyView> {
 	}
-
 }

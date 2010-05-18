@@ -3,5 +3,6 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:with field='res' type='com.jeeex.cardgame.client.res.DefaultResource' />
 	<g:HTMLPanel>
+		Hello, world
 	</g:HTMLPanel>
 </ui:UiBinder>

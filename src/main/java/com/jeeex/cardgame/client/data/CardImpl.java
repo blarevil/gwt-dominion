@@ -11,13 +11,13 @@ public class CardImpl implements Card {
 		this.cost = cost;
 	}
 
-	/** Name of the card. */
 	private final String name;
+
 	/** Description. */
 	private final String description;
 
 	/** Cost of the card. */
-	final int cost;
+	private final int cost;
 
 	public String getName() {
 		return name;
@@ -49,5 +49,29 @@ public class CardImpl implements Card {
 
 	public String toString() {
 		return name;
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CardImpl other = (CardImpl) obj;
+		if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int getCost() {
+		return cost;
 	}
 }

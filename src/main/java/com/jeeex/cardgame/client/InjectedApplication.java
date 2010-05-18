@@ -38,8 +38,7 @@ public class InjectedApplication implements Runnable {
 
 	@Override
 	public void run() {
-		mp.init();
-		
+		mp.init();		
 		ebus.getHandlerManager().addHandler(TypeConstants.MESSAGE, new BusHandler<String>() {
 			@Override
 			public void onEvent(String event) {
@@ -50,7 +49,6 @@ public class InjectedApplication implements Runnable {
 						new EmptyCallback<SendMessageResponse>());
 			}
 		});
-
 		// register message loop.
 		RootPanel.get().add(mp.getView());
 

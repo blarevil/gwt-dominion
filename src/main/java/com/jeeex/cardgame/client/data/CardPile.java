@@ -22,12 +22,7 @@ public class CardPile {
 		return card.getName() + ":" + number;
 	}
 
-	public Card takeOne() {
-		number--;
-		return this.card;
-	}
-
-	public void addCard() {
-		number++;
+	public void modifySize(int diff) {
+		number += diff;
 	}
 }

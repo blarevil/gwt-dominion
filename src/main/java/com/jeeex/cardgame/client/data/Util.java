@@ -9,6 +9,7 @@ public class Util {
 	private Util() {
 	}
 
+	/** Aggregate Collection of cards into a collection. */
 	public static Map<Card, CardPile> aggregate(Collection<Card>... cards) {
 		Map<Card, CardPile> map = new HashMap<Card, CardPile>();
 		for (Collection<Card> col : cards) {
@@ -18,7 +19,7 @@ public class Util {
 					cardPile = new CardPile(card, 1);
 					map.put(card, cardPile);
 				} else {
-					cardPile.addCard();
+					cardPile.modifySize(1);
 				}
 			}
 		}
