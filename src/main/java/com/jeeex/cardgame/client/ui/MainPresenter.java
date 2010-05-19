@@ -13,22 +13,18 @@ import com.jeeex.cardgame.client.event.TypeConstants;
 import com.jeeex.cardgame.client.ui.chat.ChatEvent;
 import com.jeeex.cardgame.client.ui.chat.ChatHandler;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
-import com.jeeex.cardgame.shared.remote.MessageServiceAsync;
 
-public class MainPresenter implements Presenter<Object> {
+public class MainPresenter implements Presenter<MainView> {
 
 	private MainView view;
-	private MessageServiceAsync msgSvc;
 	private MyEventBus ebus;
 
 	private HandlerManager mgr = new HandlerManager(this);
 
 	@Inject
-	public MainPresenter(MainView view, MyEventBus ebus,
-			MessageServiceAsync msgSvc) {
+	public MainPresenter(MainView view, MyEventBus ebus) {
 		this.view = view;
 		this.ebus = ebus;
-		this.msgSvc = msgSvc;
 	}
 
 	public void init() {

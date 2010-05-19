@@ -8,6 +8,7 @@ import com.jeeex.cardgame.client.data.msgloop.MessageLoop;
 import com.jeeex.cardgame.client.event.BusHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.event.TypeConstants;
+import com.jeeex.cardgame.client.ui.LobbyPresenter;
 import com.jeeex.cardgame.client.ui.MainPresenter;
 import com.jeeex.cardgame.client.util.EmptyCallback;
 import com.jeeex.cardgame.shared.remote.MessageServiceAsync;
@@ -29,26 +30,35 @@ public class InjectedApplication implements Runnable {
 
 	@Inject
 	MessageLoop loop;
-	
+
 	@Inject
 	MessageServiceAsync async;
-	
+
 	@Inject
 	MyEventBus ebus;
+	
+	@Inject
+	LobbyPresenter lobbyPresenter;
 
 	@Override
 	public void run() {
-		mp.init();		
-		ebus.getHandlerManager().addHandler(TypeConstants.MESSAGE, new BusHandler<String>() {
-			@Override
-			public void onEvent(String event) {
-				console.exec(event);
-				ChatMessage msg = new ChatMessage();
-				msg.setMessage(event);
-				async.sendMessage(new SendMessageRequest(msg),
-						new EmptyCallback<SendMessageResponse>());
-			}
-		});
+		lobbyPresenter.init();
+		RootPanel.get().add(lobbyPresenter.getView());
+	}
+
+	public void runWithoutLobby() {
+		mp.init();
+		ebus.getHandlerManager().addHandler(TypeConstants.MESSAGE,
+				new BusHandler<String>() {
+					@Override
+					public void onEvent(String event) {
+						console.exec(event);
+						ChatMessage msg = new ChatMessage();
+						msg.setMessage(event);
+						async.sendMessage(new SendMessageRequest(msg),
+								new EmptyCallback<SendMessageResponse>());
+					}
+				});
 		// register message loop.
 		RootPanel.get().add(mp.getView());
 
