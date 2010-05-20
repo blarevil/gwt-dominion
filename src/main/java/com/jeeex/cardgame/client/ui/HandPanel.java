@@ -17,8 +17,8 @@ import com.jeeex.cardgame.client.ui.CardWidget.Factory;
 
 @Singleton
 public class HandPanel extends Composite {
-
 	List<CardWidget> cards = new ArrayList<CardWidget>();
+
 	// RANDOM coordinate-related variables.
 	int width = 500;
 	int height = 60;

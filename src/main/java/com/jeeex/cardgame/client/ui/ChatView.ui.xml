@@ -1,0 +1,31 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.root {
+			width: 200px;
+		}
+		
+		.chathistory,.chatbox {
+			width: 180px;
+			margin: 5px;
+		}
+		
+		.chatbox {
+			height: 40px;
+		}
+		
+		.chathistory {
+			height: 387px;
+			font-size: 10px;
+		}
+	</ui:style>
+	<g:DockLayoutPanel addStyleNames="{style.root}" unit="PX">
+		<g:south size="60">
+			<g:TextArea addStyleNames="{style.chatbox}"></g:TextArea>
+		</g:south>
+		<g:center>
+			<g:TextArea addStyleNames="{style.chathistory}"></g:TextArea>
+		</g:center>
+	</g:DockLayoutPanel>
+</ui:UiBinder> 

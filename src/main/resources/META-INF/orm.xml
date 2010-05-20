@@ -4,5 +4,7 @@
 	version="1.0">
 	<package>com.jeeex.cardgame.shared.remote.entity</package>
 	<entity class="Message"/>
-	<entity class="ChatMessage"></entity>
+	<entity class="ChatMessage"/>
+	<entity class="User"/>
+	<entity class="AuthToken"/>
 </entity-mappings>

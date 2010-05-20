@@ -7,7 +7,7 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.client.data.model.HandlerEndpoint;
-import com.jeeex.cardgame.client.event.BusHandler;
+import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.event.TypeConstants;
 import com.jeeex.cardgame.client.ui.chat.ChatEvent;
@@ -28,8 +28,8 @@ public class MainPresenter implements Presenter<MainView> {
 	}
 
 	public void init() {
-		ebus.getHandlerManager().addHandler(TypeConstants.MESSAGE,
-				new BusHandler<String>() {
+		ebus.getHandlerManager().addHandler(TypeConstants.STRING,
+				new GenericHandler<String>() {
 					@Override
 					public void onEvent(String event) {
 						TextArea wgt = view.getChatHistoryArea();

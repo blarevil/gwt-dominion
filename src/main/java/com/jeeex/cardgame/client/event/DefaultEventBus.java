@@ -13,8 +13,8 @@ public class DefaultEventBus implements EventBus {
 	}
 
 	@Override
-	public <E> void fire(Type<BusHandler<E>> type, E e) {
-		getHandlerManager().fireEvent(new BusEvent<E>(type, e));
+	public <E> void fire(Type<GenericHandler<E>> type, E e) {
+		getHandlerManager().fireEvent(new GenericEvent<E>(type, e));
 	}
 
 	public HandlerManager getHandlerManager() {

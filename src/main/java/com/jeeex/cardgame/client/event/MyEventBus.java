@@ -19,6 +19,6 @@ public class MyEventBus extends DefaultEventBus {
 	}
 
 	public void println(String msg) {
-		fire(TypeConstants.MESSAGE, msg);
+		fire(TypeConstants.STRING, msg);
 	}
 }

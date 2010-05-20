@@ -2,10 +2,11 @@ package com.jeeex.cardgame.client;
 
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.client.console.Console;
 import com.jeeex.cardgame.client.data.msgloop.MessageLoop;
-import com.jeeex.cardgame.client.event.BusHandler;
+import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.event.TypeConstants;
 import com.jeeex.cardgame.client.ui.LobbyPresenter;
@@ -43,13 +44,13 @@ public class InjectedApplication implements Runnable {
 	@Override
 	public void run() {
 		lobbyPresenter.init();
-		RootPanel.get().add(lobbyPresenter.getView());
+		RootPanel.get().add((Widget)lobbyPresenter.getView());
 	}
 
 	public void runWithoutLobby() {
 		mp.init();
-		ebus.getHandlerManager().addHandler(TypeConstants.MESSAGE,
-				new BusHandler<String>() {
+		ebus.getHandlerManager().addHandler(TypeConstants.STRING,
+				new GenericHandler<String>() {
 					@Override
 					public void onEvent(String event) {
 						console.exec(event);

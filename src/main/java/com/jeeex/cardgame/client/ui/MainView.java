@@ -8,7 +8,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
-public class MainView extends Composite implements ChatView {
+public class MainView extends Composite implements ChatViewInterface {
 	private static Binder uiBinder = GWT.create(Binder.class);
 	@UiField(provided = true)
 	final Composite handPnl;

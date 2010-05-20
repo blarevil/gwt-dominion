@@ -5,6 +5,10 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class EmptyCallback<T> implements AsyncCallback<T> {
+	/**
+	 * The default failure behavior is using Window.alert() to prevent silent
+	 * consumption of the error messages.
+	 */
 	@Override
 	public void onFailure(Throwable caught) {
 		Window.alert("onFailure():" + caught);
