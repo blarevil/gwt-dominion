@@ -10,6 +10,8 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.server.init.TestPersistenceModule;
+import com.jeeex.cardgame.shared.entity.AuthToken;
+import com.jeeex.cardgame.shared.entity.User;
 
 public class EntityTest {
 

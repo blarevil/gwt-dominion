@@ -3,7 +3,7 @@ package com.jeeex.cardgame.shared.remote.lobby;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.jeeex.cardgame.shared.remote.entity.GameRoom;
+import com.jeeex.cardgame.shared.entity.GameRoom;
 
 public class GetGameListResponse implements IsSerializable {
 	List<GameRoom> rooms;

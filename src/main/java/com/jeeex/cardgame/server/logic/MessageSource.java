@@ -7,7 +7,7 @@ import javax.persistence.Query;
 
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
-import com.jeeex.cardgame.shared.remote.entity.Message;
+import com.jeeex.cardgame.shared.entity.Message;
 
 @RequestScoped
 public class MessageSource {

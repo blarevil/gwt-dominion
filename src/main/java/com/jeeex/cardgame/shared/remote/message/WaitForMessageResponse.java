@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.jeeex.cardgame.annotation.GwtConstructor;
-import com.jeeex.cardgame.shared.remote.entity.Message;
+import com.jeeex.cardgame.shared.entity.Message;
 
 public class WaitForMessageResponse implements IsSerializable {
 

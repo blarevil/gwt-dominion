@@ -13,7 +13,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.jeeex.cardgame.server.logic.MessageSource;
-import com.jeeex.cardgame.shared.remote.entity.Message;
+import com.jeeex.cardgame.shared.entity.Message;
 
 @Singleton
 public class MessageNexus {

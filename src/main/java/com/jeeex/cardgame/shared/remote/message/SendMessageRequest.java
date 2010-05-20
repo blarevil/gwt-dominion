@@ -2,7 +2,7 @@ package com.jeeex.cardgame.shared.remote.message;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.jeeex.cardgame.annotation.GwtConstructor;
-import com.jeeex.cardgame.shared.remote.entity.Message;
+import com.jeeex.cardgame.shared.entity.Message;
 
 public class SendMessageRequest implements IsSerializable {
 	private Message msg;

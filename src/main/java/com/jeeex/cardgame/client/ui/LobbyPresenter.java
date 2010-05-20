@@ -8,7 +8,7 @@ import com.google.inject.Inject;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.util.EmptyCallback;
-import com.jeeex.cardgame.shared.remote.entity.GameRoom;
+import com.jeeex.cardgame.shared.entity.GameRoom;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListRequest;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListResponse;
 import com.jeeex.cardgame.shared.remote.lobby.LobbyServiceAsync;

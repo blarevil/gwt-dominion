@@ -1,4 +1,4 @@
-package com.jeeex.cardgame.shared.remote.entity;
+package com.jeeex.cardgame.shared.entity;
 
 import static javax.persistence.InheritanceType.SINGLE_TABLE;
 

@@ -12,8 +12,8 @@ import com.jeeex.cardgame.client.event.TypeConstants;
 import com.jeeex.cardgame.client.ui.LobbyPresenter;
 import com.jeeex.cardgame.client.ui.MainPresenter;
 import com.jeeex.cardgame.client.util.EmptyCallback;
+import com.jeeex.cardgame.shared.entity.ChatMessage;
 import com.jeeex.cardgame.shared.remote.MessageServiceAsync;
-import com.jeeex.cardgame.shared.remote.entity.ChatMessage;
 import com.jeeex.cardgame.shared.remote.message.SendMessageRequest;
 import com.jeeex.cardgame.shared.remote.message.SendMessageResponse;
 

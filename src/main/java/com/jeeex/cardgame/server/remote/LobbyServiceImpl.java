@@ -7,7 +7,7 @@ import javax.persistence.Query;
 
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
-import com.jeeex.cardgame.shared.remote.entity.GameRoom;
+import com.jeeex.cardgame.shared.entity.GameRoom;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListRequest;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListResponse;
 import com.jeeex.cardgame.shared.remote.lobby.LobbyService;

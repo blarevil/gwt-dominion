@@ -7,8 +7,8 @@ import javax.persistence.Query;
 
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
-import com.jeeex.cardgame.shared.remote.entity.AuthToken;
-import com.jeeex.cardgame.shared.remote.entity.User;
+import com.jeeex.cardgame.shared.entity.AuthToken;
+import com.jeeex.cardgame.shared.entity.User;
 import com.jeeex.cardgame.shared.remote.user.CreateUserRequest;
 import com.jeeex.cardgame.shared.remote.user.CreateUserResponse;
 import com.jeeex.cardgame.shared.remote.user.LoginRequest;

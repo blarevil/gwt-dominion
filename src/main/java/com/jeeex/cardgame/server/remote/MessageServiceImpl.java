@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
-import com.jeeex.cardgame.shared.remote.entity.Message;
+import com.jeeex.cardgame.shared.entity.Message;
 import com.jeeex.cardgame.shared.remote.message.MessageService;
 import com.jeeex.cardgame.shared.remote.message.SendMessageRequest;
 import com.jeeex.cardgame.shared.remote.message.SendMessageResponse;
