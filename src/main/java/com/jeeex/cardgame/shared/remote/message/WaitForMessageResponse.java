@@ -1,4 +1,4 @@
-package com.jeeex.cardgame.shared.remote;
+package com.jeeex.cardgame.shared.remote.message;
 
 import java.util.ArrayList;
 

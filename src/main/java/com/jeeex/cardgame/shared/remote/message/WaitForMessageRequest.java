@@ -1,4 +1,4 @@
-package com.jeeex.cardgame.shared.remote;
+package com.jeeex.cardgame.shared.remote.message;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.jeeex.cardgame.annotation.GwtConstructor;

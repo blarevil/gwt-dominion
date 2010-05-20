@@ -5,8 +5,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.shared.remote.MessageServiceAsync;
-import com.jeeex.cardgame.shared.remote.WaitForMessageRequest;
-import com.jeeex.cardgame.shared.remote.WaitForMessageResponse;
+import com.jeeex.cardgame.shared.remote.message.WaitForMessageRequest;
+import com.jeeex.cardgame.shared.remote.message.WaitForMessageResponse;
 
 public class MessageLoop implements Runnable {
 

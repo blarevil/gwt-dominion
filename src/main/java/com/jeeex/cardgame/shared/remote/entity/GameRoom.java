@@ -7,11 +7,12 @@ import javax.persistence.Id;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @Entity
-public class GameRoom implements IsSerializable{
-	
-	@Id @GeneratedValue
+public class GameRoom implements IsSerializable {
+
+	@Id
+	@GeneratedValue
 	private Long id;
-	
+
 	private String name;
 
 	public Long getId() {

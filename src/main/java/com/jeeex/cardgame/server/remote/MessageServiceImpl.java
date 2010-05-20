@@ -7,12 +7,12 @@ import javax.persistence.EntityManager;
 
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
-import com.jeeex.cardgame.shared.remote.MessageService;
-import com.jeeex.cardgame.shared.remote.SendMessageRequest;
-import com.jeeex.cardgame.shared.remote.SendMessageResponse;
-import com.jeeex.cardgame.shared.remote.WaitForMessageRequest;
-import com.jeeex.cardgame.shared.remote.WaitForMessageResponse;
 import com.jeeex.cardgame.shared.remote.entity.Message;
+import com.jeeex.cardgame.shared.remote.message.MessageService;
+import com.jeeex.cardgame.shared.remote.message.SendMessageRequest;
+import com.jeeex.cardgame.shared.remote.message.SendMessageResponse;
+import com.jeeex.cardgame.shared.remote.message.WaitForMessageRequest;
+import com.jeeex.cardgame.shared.remote.message.WaitForMessageResponse;
 
 @RequestScoped
 public class MessageServiceImpl implements MessageService {
