@@ -32,7 +32,7 @@
 								game</g:Button>
 						</td>
 						<td>
-							<g:Button addStyleNames="{style.button}">Refresh game</g:Button>
+							<g:Button addStyleNames="{style.button}" ui:field="refreshBtn">Refresh game</g:Button>
 						</td>
 						<td>
 							<g:Button addStyleNames="{style.button}">Preferences</g:Button>
@@ -60,6 +60,7 @@
 		<g:west size="100">
 			<g:FlowPanel ui:field="gamelist">
 				<g:Label>Lobby</g:Label>
+				<c:GameRoomList/>
 			</g:FlowPanel>
 		</g:west>
 		<g:east size="200">

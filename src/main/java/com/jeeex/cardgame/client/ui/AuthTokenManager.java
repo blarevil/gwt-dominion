@@ -8,11 +8,15 @@ import com.jeeex.cardgame.client.event.TypeConstants;
 
 public class AuthTokenManager {
 
-	private String tkn;
+	/** This value is never null. */
+	private String tkn = "";
 
 	private HandlerManager mgr = new HandlerManager(this);
 
 	public void setAuthToken(String token) {
+		if (token == null) {
+			throw new NullPointerException("token");
+		}
 		tkn = token;
 		mgr.fireEvent(makeEvent(TypeConstants.STRING, token));
 	}

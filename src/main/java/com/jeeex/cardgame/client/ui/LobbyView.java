@@ -32,6 +32,9 @@ public class LobbyView extends AbstractLobbyView {
 	@UiField
 	Label debugAuthTokenLbl;
 
+	@UiField
+	Button refreshBtn;
+
 	public FlowPanel getGamelist() {
 		return gamelist;
 	}
@@ -58,5 +61,9 @@ public class LobbyView extends AbstractLobbyView {
 
 	public Button getCreateGameButton() {
 		return createGameBtn;
+	}
+
+	public Button getRefreshButton() {
+		return refreshBtn;
 	}
 }

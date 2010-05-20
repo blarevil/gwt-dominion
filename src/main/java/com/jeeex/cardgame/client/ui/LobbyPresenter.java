@@ -9,6 +9,8 @@ import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.util.EmptyCallback;
 import com.jeeex.cardgame.shared.entity.GameRoom;
+import com.jeeex.cardgame.shared.remote.lobby.CreateGameRequest;
+import com.jeeex.cardgame.shared.remote.lobby.CreateGameResponse;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListRequest;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListResponse;
 import com.jeeex.cardgame.shared.remote.lobby.LobbyServiceAsync;
@@ -22,7 +24,17 @@ import com.jeeex.cardgame.shared.remote.user.UserServiceAsync;
 
 public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 
-	AuthTokenManager tknMgr;
+	private final AuthTokenManager tknMgr = new AuthTokenManager();
+
+	private final class GameListCallback extends
+			EmptyCallback<GetGameListResponse> {
+		@Override
+		public void onSuccess(GetGameListResponse result) {
+			for (GameRoom gr : result.getRooms()) {
+				view.gamelist.add(new Label(gr.getName()));
+			}
+		}
+	}
 
 	private final class LoginCallback extends EmptyCallback<LoginResponse> {
 		@Override
@@ -70,20 +82,17 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 	@Override
 	public void init() {
 		view.getLogoutButton().setEnabled(false);
-		
-		tknMgr = new AuthTokenManager();
-		// Game list initialization.
-		lobbySvc.getGameList(new GetGameListRequest(),
-				new EmptyCallback<GetGameListResponse>() {
-					@Override
-					public void onSuccess(GetGameListResponse result) {
-						for (GameRoom gr : result.getRooms()) {
-							view.gamelist.add(new Label(gr.getName()));
-						}
-					}
-				});
 
-		// initialize 'create button' handler.
+		// initialize 'Refresh game' handler.
+		view.getRefreshButton().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				lobbySvc.getGameList(new GetGameListRequest(),
+						new GameListCallback());
+			}
+		});
+
+		// initialize 'create game' handler.
 		view.getCreateUserButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -122,6 +131,13 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 		view.getCreateGameButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
+				String gameName = Window.prompt("Enter the game name:", "");
+				if (gameName != null) {
+					CreateGameRequest req = new CreateGameRequest();
+					req.setName(gameName);
+					lobbySvc.createGame(req,
+							new EmptyCallback<CreateGameResponse>());
+				}
 				Window.alert("Creating a game...(TODO - implement this).");
 			}
 		});
@@ -131,8 +147,8 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 			public void onEvent(String token) {
 				view.getAuthTokenLabel().setText(token);
 				boolean loggedIn = !token.equals("");
-				view.getLoginButton().setEnabled(loggedIn);
-				view.getLogoutButton().setEnabled(!loggedIn);
+				view.getLoginButton().setEnabled(!loggedIn);
+				view.getLogoutButton().setEnabled(loggedIn);
 			}
 		});
 	}

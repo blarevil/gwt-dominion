@@ -4,7 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
-import com.jeeex.cardgame.shared.remote.MessageServiceAsync;
+import com.jeeex.cardgame.shared.remote.message.MessageServiceAsync;
 import com.jeeex.cardgame.shared.remote.message.WaitForMessageRequest;
 import com.jeeex.cardgame.shared.remote.message.WaitForMessageResponse;
 

@@ -8,6 +8,8 @@ import javax.persistence.Query;
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
 import com.jeeex.cardgame.shared.entity.GameRoom;
+import com.jeeex.cardgame.shared.remote.lobby.CreateGameRequest;
+import com.jeeex.cardgame.shared.remote.lobby.CreateGameResponse;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListRequest;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListResponse;
 import com.jeeex.cardgame.shared.remote.lobby.LobbyService;
@@ -33,5 +35,15 @@ public class LobbyServiceImpl implements LobbyService {
 		} finally {
 			em.getTransaction().commit();
 		}
+	}
+
+	@Override
+	public CreateGameResponse createGame(CreateGameRequest request) {
+		em.getTransaction().begin();
+		GameRoom gr = new GameRoom();
+		gr.setName(request.getName());
+		em.persist(gr);
+		em.getTransaction().commit();
+		return new CreateGameResponse();
 	}
 }

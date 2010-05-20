@@ -5,7 +5,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 
-public abstract class AbstractLobbyView extends Composite{
+public abstract class AbstractLobbyView extends Composite {
 	public abstract FlowPanel getGamelist();
 
 	public abstract Button getCreateUserButton();
@@ -17,4 +17,6 @@ public abstract class AbstractLobbyView extends Composite{
 	public abstract Label getAuthTokenLabel();
 
 	public abstract Button getCreateGameButton();
+
+	public abstract Button getRefreshButton();
 }

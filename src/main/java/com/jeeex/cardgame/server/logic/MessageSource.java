@@ -7,8 +7,10 @@ import javax.persistence.Query;
 
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
+import com.jeeex.cardgame.server.aop.UnderTransaction;
 import com.jeeex.cardgame.shared.entity.Message;
 
+/** Where message is coming from. */
 @RequestScoped
 public class MessageSource {
 
@@ -18,6 +20,7 @@ public class MessageSource {
 	@Inject
 	EntityManager em;
 
+	@UnderTransaction
 	public Message getMessage(long counter) {
 		Query q = em.createQuery("SELECT msg FROM Message msg WHERE msg.id = :counter");
 		q.setParameter("counter", counter);
