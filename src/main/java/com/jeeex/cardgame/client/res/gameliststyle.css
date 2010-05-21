@@ -1,0 +1,15 @@
+.background {
+	background-color: red;
+}
+
+.column_common {
+	background-color: #FFD1D7;
+}
+
+.column1 {
+	width: 50px;
+}
+
+.column2 {
+	width: 100px;
+}

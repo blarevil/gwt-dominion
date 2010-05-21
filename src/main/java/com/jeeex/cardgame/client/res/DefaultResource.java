@@ -10,6 +10,18 @@ public interface DefaultResource extends ClientBundle {
 		String cardsize();
 	}
 
+	public static interface GameListStyle extends CssResource{
+		String background();
+
+		String column1();
+		
+		String column2();
+
+		String column_common();
+	}
 	@Source("style.css")
 	public MyStyle style();
+	
+	@Source("gameliststyle.css")
+	public GameListStyle gameListStyle();
 }

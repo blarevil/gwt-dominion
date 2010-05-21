@@ -13,7 +13,8 @@ import com.google.inject.Singleton;
 import com.jeeex.cardgame.client.data.CardImpl;
 import com.jeeex.cardgame.client.data.Card;
 import com.jeeex.cardgame.client.res.DefaultResource.MyStyle;
-import com.jeeex.cardgame.client.ui.CardWidget.Factory;
+import com.jeeex.cardgame.client.ui.widget.CardWidget;
+import com.jeeex.cardgame.client.ui.widget.CardWidget.Factory;
 
 @Singleton
 public class HandPanel extends Composite {

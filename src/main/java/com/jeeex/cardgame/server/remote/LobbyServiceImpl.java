@@ -26,6 +26,7 @@ public class LobbyServiceImpl implements LobbyService {
 		return resp;
 	}
 
+	/** Get the list of games. */
 	@SuppressWarnings("unchecked")
 	private List<GameRoom> getList() {
 		try {

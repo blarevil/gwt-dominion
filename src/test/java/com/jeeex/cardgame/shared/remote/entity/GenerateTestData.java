@@ -4,12 +4,12 @@ import javax.persistence.EntityManager;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.jeeex.cardgame.server.init.TestPersistenceModule;
+import com.jeeex.cardgame.server.init.DummyPersistenceModule;
 import com.jeeex.cardgame.shared.entity.GameRoom;
 
 public class GenerateTestData implements Runnable {
 	public static void main(String[] args) {
-		Guice.createInjector(new TestPersistenceModule()).getInstance(
+		Guice.createInjector(new DummyPersistenceModule()).getInstance(
 				GenerateTestData.class).run();
 	}
 

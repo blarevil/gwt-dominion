@@ -3,12 +3,10 @@ package com.jeeex.cardgame.client.ui;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.util.EmptyCallback;
-import com.jeeex.cardgame.shared.entity.GameRoom;
 import com.jeeex.cardgame.shared.remote.lobby.CreateGameRequest;
 import com.jeeex.cardgame.shared.remote.lobby.CreateGameResponse;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListRequest;
@@ -30,9 +28,11 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 			EmptyCallback<GetGameListResponse> {
 		@Override
 		public void onSuccess(GetGameListResponse result) {
-			for (GameRoom gr : result.getRooms()) {
-				view.gamelist.add(new Label(gr.getName()));
-			}
+			view.getGamelist().update(result.getRooms());
+			/*
+			 * for (GameRoom gr : result.getRooms()) { view.gamelist.add(new
+			 * Label(gr.getName())); }
+			 */
 		}
 	}
 
@@ -138,7 +138,6 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 					lobbySvc.createGame(req,
 							new EmptyCallback<CreateGameResponse>());
 				}
-				Window.alert("Creating a game...(TODO - implement this).");
 			}
 		});
 

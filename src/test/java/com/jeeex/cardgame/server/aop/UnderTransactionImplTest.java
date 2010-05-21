@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.jeeex.cardgame.server.init.TestPersistenceModule;
+import com.jeeex.cardgame.server.init.DummyPersistenceModule;
 
 public class UnderTransactionImplTest {
 
@@ -32,7 +32,7 @@ public class UnderTransactionImplTest {
 
 	@Before
 	public void init() {
-		Guice.createInjector(new TestPersistenceModule()).injectMembers(this);
+		Guice.createInjector(new DummyPersistenceModule()).injectMembers(this);
 	}
 
 	@Test

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.jeeex.cardgame.server.init.TestPersistenceModule;
+import com.jeeex.cardgame.server.init.DummyPersistenceModule;
 import com.jeeex.cardgame.shared.entity.AuthToken;
 import com.jeeex.cardgame.shared.entity.User;
 
@@ -20,7 +20,7 @@ public class EntityTest {
 
 	@Before
 	public void init() {
-		Guice.createInjector(new TestPersistenceModule()).injectMembers(this);
+		Guice.createInjector(new DummyPersistenceModule()).injectMembers(this);
 	}
 
 	@Test

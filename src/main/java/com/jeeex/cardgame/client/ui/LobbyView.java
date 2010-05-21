@@ -4,9 +4,10 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.jeeex.cardgame.client.ui.widget.GameListWidget;
 
 public class LobbyView extends AbstractLobbyView {
 	private static Binder uiBinder = GWT.create(Binder.class);
@@ -14,8 +15,8 @@ public class LobbyView extends AbstractLobbyView {
 	interface Binder extends UiBinder<Widget, LobbyView> {
 	}
 
-	@UiField
-	FlowPanel gamelist;
+	@UiField(provided = true)
+	GameListWidget gameList;
 
 	@UiField
 	Button createUserBtn;
@@ -35,11 +36,13 @@ public class LobbyView extends AbstractLobbyView {
 	@UiField
 	Button refreshBtn;
 
-	public FlowPanel getGamelist() {
-		return gamelist;
+	public GameListWidget getGamelist() {
+		return gameList;
 	}
 
-	public LobbyView() {
+	@Inject
+	public LobbyView(GameListWidget gameList) {
+		this.gameList = gameList;
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

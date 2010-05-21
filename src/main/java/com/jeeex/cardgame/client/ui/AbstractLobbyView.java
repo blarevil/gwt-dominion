@@ -2,11 +2,11 @@ package com.jeeex.cardgame.client.ui;
 
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.jeeex.cardgame.client.ui.widget.GameListWidget;
 
 public abstract class AbstractLobbyView extends Composite {
-	public abstract FlowPanel getGamelist();
+	public abstract GameListWidget getGamelist();
 
 	public abstract Button getCreateUserButton();
 

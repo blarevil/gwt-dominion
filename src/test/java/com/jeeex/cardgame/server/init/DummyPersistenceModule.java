@@ -19,7 +19,7 @@ import com.jeeex.cardgame.server.aop.UnderTransactionImpl;
  * TODO(Jeeyoung Kim): We don't have use to use MySQL all the time, especially
  * when the test doesn't require it...
  */
-public class TestPersistenceModule extends AbstractModule {
+public class DummyPersistenceModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
