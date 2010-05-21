@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>com.google.gwt.inject</groupId>
 			<artifactId>gin</artifactId>
-			<version>1.0</version>
+			<version>1.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.easymock</groupId>
@@ -87,13 +87,6 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.googlecode.mvp4g</groupId>
-			<artifactId>mvp4g</artifactId>
-			<version>1.2.0-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<!--
 				Java concurrency in practice annotations. Used for documentation
 				purposes.
@@ -101,6 +94,19 @@
 			<groupId>net.jcip</groupId>
 			<artifactId>jcip-annotations</artifactId>
 			<version>1.0</version>
+		</dependency>
+		<!-- Override Guice with Guice 2.1 snapshot -->
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>2.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-assisted-inject</artifactId>
+			<version>2.1-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -113,7 +119,9 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>compile</goal>
+							<!--
+								Enable / move this to later step. <goal>compile</goal>
+							-->
 							<goal>generateAsync</goal>
 							<goal>test</goal>
 						</goals>
@@ -163,9 +171,5 @@
 		</plugins>
 	</build>
 	<repositories>
-		<repository>
-			<id>MVP4G-snapshot</id>
-			<url>https://mvp4g.googlecode.com/svn/maven2/snapshots/</url>
-		</repository>
 	</repositories>
 </project>

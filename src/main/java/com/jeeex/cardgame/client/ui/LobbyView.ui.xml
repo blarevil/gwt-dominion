@@ -71,7 +71,7 @@
 			</g:FlowPanel>
 		</g:west>
 		<g:east size="200">
-			<c:ChatView addStyleNames="{style.green}"/>
+			<c:ChatView ui:field="chatView" addStyleNames="{style.green}"/>
 		</g:east>
 		<g:center>
 			<g:HTMLPanel>

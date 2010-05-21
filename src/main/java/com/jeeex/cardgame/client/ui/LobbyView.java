@@ -36,6 +36,9 @@ public class LobbyView extends AbstractLobbyView {
 	@UiField
 	Button refreshBtn;
 
+	@UiField
+	ChatView chatView;
+
 	public GameListWidget getGamelist() {
 		return gameList;
 	}

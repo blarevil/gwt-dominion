@@ -29,10 +29,6 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 		@Override
 		public void onSuccess(GetGameListResponse result) {
 			view.getGamelist().update(result.getRooms());
-			/*
-			 * for (GameRoom gr : result.getRooms()) { view.gamelist.add(new
-			 * Label(gr.getName())); }
-			 */
 		}
 	}
 
