@@ -9,6 +9,7 @@ import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.event.TypeConstants;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
+import com.jeeex.cardgame.client.ui.widget.GameListView;
 import com.jeeex.cardgame.client.util.EmptyCallback;
 import com.jeeex.cardgame.shared.entity.AuthToken;
 import com.jeeex.cardgame.shared.remote.lobby.CreateGameRequest;
@@ -32,7 +33,7 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 			EmptyCallback<GetGameListResponse> {
 		@Override
 		public void onSuccess(GetGameListResponse result) {
-			view.getGamelist().update(result.getRooms());
+			gameList.update(result.getRooms());
 		}
 	}
 
@@ -70,12 +71,16 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 
 	private final MyEventBus ebus;
 
+	private final GameListView gameList;
+
 	@Inject
 	public LobbyPresenter(
-			// ebus
+	// ebus
 			MyEventBus ebus,
 			// views
 			LobbyView view,
+			// TODO - inject presenter for this instead
+			GameListView gameList,
 			// presenters
 			ChatPresenter chatPresenter,
 			// services
@@ -85,6 +90,7 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 		this.view = view;
 		this.lobbySvc = lobbySvc;
 		this.userSvc = userSvc;
+		this.gameList = gameList;
 		this.chatPresenter = chatPresenter;
 		this.tknMgr = tknMgr;
 		this.ebus = ebus;
@@ -99,6 +105,7 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 	public void init() {
 		chatPresenter.init();
 		// initialize
+		// should this be done via eventBus?
 		view.setChatView(chatPresenter.getView());
 		view.init();
 
@@ -175,13 +182,15 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 				}
 			}
 		});
-		
+
 		GenericHandler<Widget> handler = new GenericHandler<Widget>() {
 			@Override
 			public void onEvent(Widget wgt) {
 				view.setCenterWidget(wgt);
 			}
 		};
-		ebus.getHandlerManager().addHandler(TypeConstants.CENTER_WIDGET, handler);
+		ebus.getHandlerManager().addHandler(TypeConstants.CENTER_WIDGET,
+				handler);
+		ebus.setCenterWidget(gameList);
 	}
 }

@@ -9,16 +9,12 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.client.ui.widget.ClientUtil;
-import com.jeeex.cardgame.client.ui.widget.GameListView;
 
 public class LobbyView extends AbstractLobbyView {
 	private static Binder uiBinder = GWT.create(Binder.class);
 
 	interface Binder extends UiBinder<Widget, LobbyView> {
 	}
-
-	@UiField(provided = true)
-	GameListView gameList;
 
 	@UiField
 	Button createUserBtn;
@@ -44,13 +40,8 @@ public class LobbyView extends AbstractLobbyView {
 	@UiField
 	FlowPanel centerPanel;
 
-	public GameListView getGamelist() {
-		return gameList;
-	}
-
 	@Inject
-	public LobbyView(GameListView gameList) {
-		this.gameList = gameList;
+	public LobbyView() {
 	}
 
 	public void setChatView(ChatView view) {

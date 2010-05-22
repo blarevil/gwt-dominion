@@ -64,18 +64,11 @@
 				</table>
 			</g:HTMLPanel>
 		</g:north>
-		<g:west size="200">
-			<g:FlowPanel addStyleNames="{style.green}">
-				<g:Label>Lobby</g:Label>
-				<wgt:GameListView ui:field="gameList"/>
-			</g:FlowPanel>
-		</g:west>
 		<g:east size="200">
 			<c:ChatView ui:field="chatView" addStyleNames="{style.green}"/>
 		</g:east>
 		<g:center>
 			<g:FlowPanel ui:field="centerPanel">
-				<g:Label>Please put stuff here...</g:Label>
 			</g:FlowPanel>
 		</g:center>
 	</g:DockLayoutPanel>
