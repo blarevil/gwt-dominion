@@ -14,4 +14,8 @@ public interface LobbyService extends RemoteService {
 	 */
 	public CreateGameResponse createGame(CreateGameRequest request)
 			throws InvalidTokenException;
+
+	// join game!
+	public JoinGameResponse joinGame(JoinGameRequest request)
+			throws InvalidTokenException;
 }

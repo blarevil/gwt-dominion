@@ -8,6 +8,7 @@ import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
 import com.jeeex.cardgame.server.aop.UnderTransaction;
 import com.jeeex.cardgame.shared.entity.AuthToken;
+import com.jeeex.cardgame.shared.entity.User;
 import com.jeeex.cardgame.shared.remote.Authenticated;
 import com.jeeex.cardgame.shared.remote.InvalidTokenException;
 
@@ -49,5 +50,11 @@ public class AuthenticationChecker {
 			return false;
 		}
 		return true;
+	}
+
+	/** Does this belong here? */
+	@UnderTransaction
+	public User getUser(AuthToken token) {
+		return em.getReference(User.class, token.getUserId());
 	}
 }

@@ -3,8 +3,11 @@ package com.jeeex.cardgame.client.ui;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.client.event.GenericHandler;
+import com.jeeex.cardgame.client.event.MyEventBus;
+import com.jeeex.cardgame.client.event.TypeConstants;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.util.EmptyCallback;
 import com.jeeex.cardgame.shared.entity.AuthToken;
@@ -37,7 +40,7 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 		@Override
 		public void onSuccess(LoginResponse result) {
 			if (result.isSuccessful()) {
-				tknMgr.setAuthToken(result.getAuthToken());
+				tknMgr.set(result.getAuthToken());
 				Window.alert("Login completed. Token:" + result.getAuthToken());
 			} else {
 				Window.alert("Login failed.");
@@ -65,15 +68,18 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 
 	final ChatPresenter chatPresenter;
 
+	private final MyEventBus ebus;
+
 	@Inject
 	public LobbyPresenter(
+			// ebus
+			MyEventBus ebus,
 			// views
 			LobbyView view,
 			// presenters
 			ChatPresenter chatPresenter,
 			// services
-			LobbyServiceAsync lobbySvc,
-			UserServiceAsync userSvc,
+			LobbyServiceAsync lobbySvc, UserServiceAsync userSvc,
 			// authtoken
 			AuthTokenManager tknMgr) {
 		this.view = view;
@@ -81,6 +87,7 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 		this.userSvc = userSvc;
 		this.chatPresenter = chatPresenter;
 		this.tknMgr = tknMgr;
+		this.ebus = ebus;
 	}
 
 	@Override
@@ -135,8 +142,8 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 			@Override
 			public void onClick(ClickEvent event) {
 				LogoutRequest req = new LogoutRequest();
-				req.setAuthToken(tknMgr.getAuthToken());
-				tknMgr.setAuthToken(null);
+				req.setAuthToken(tknMgr.get());
+				tknMgr.set(null);
 				userSvc.logout(req, new EmptyCallback<LogoutResponse>());
 			}
 		});
@@ -161,12 +168,20 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 				String gameName = Window.prompt("Enter the game name:", "");
 				if (gameName != null) {
 					CreateGameRequest req = new CreateGameRequest();
-					req.setAuthToken(tknMgr.getAuthToken());
+					req.setAuthToken(tknMgr.get());
 					req.setName(gameName);
 					lobbySvc.createGame(req,
 							new EmptyCallback<CreateGameResponse>());
 				}
 			}
 		});
+		
+		GenericHandler<Widget> handler = new GenericHandler<Widget>() {
+			@Override
+			public void onEvent(Widget wgt) {
+				view.setCenterWidget(wgt);
+			}
+		};
+		ebus.getHandlerManager().addHandler(TypeConstants.CENTER_WIDGET, handler);
 	}
 }

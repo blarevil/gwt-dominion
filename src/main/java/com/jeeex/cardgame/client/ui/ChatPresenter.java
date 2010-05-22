@@ -42,7 +42,7 @@ public class ChatPresenter implements Presenter<ChatView> {
 					String msg = view.getChatBox().getText();
 					view.getChatBox().setText("");
 					SendChatMessageRequest req = new SendChatMessageRequest();
-					req.setAuthToken(tknMgr.getAuthToken());
+					req.setAuthToken(tknMgr.get());
 					msgSvc.sendChatMessage(req,
 							new EmptyCallback<SendChatMessageResponse>());
 				}

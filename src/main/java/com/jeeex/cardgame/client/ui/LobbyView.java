@@ -4,10 +4,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.jeeex.cardgame.client.ui.widget.GameListWidget;
+import com.jeeex.cardgame.client.ui.widget.ClientUtil;
+import com.jeeex.cardgame.client.ui.widget.GameListView;
 
 public class LobbyView extends AbstractLobbyView {
 	private static Binder uiBinder = GWT.create(Binder.class);
@@ -16,7 +18,7 @@ public class LobbyView extends AbstractLobbyView {
 	}
 
 	@UiField(provided = true)
-	GameListWidget gameList;
+	GameListView gameList;
 
 	@UiField
 	Button createUserBtn;
@@ -39,12 +41,15 @@ public class LobbyView extends AbstractLobbyView {
 	@UiField(provided = true)
 	ChatView chatView;
 
-	public GameListWidget getGamelist() {
+	@UiField
+	FlowPanel centerPanel;
+
+	public GameListView getGamelist() {
 		return gameList;
 	}
 
 	@Inject
-	public LobbyView(GameListWidget gameList) {
+	public LobbyView(GameListView gameList) {
 		this.gameList = gameList;
 	}
 
@@ -78,5 +83,10 @@ public class LobbyView extends AbstractLobbyView {
 
 	public Button getRefreshButton() {
 		return refreshBtn;
+	}
+
+	public void setCenterWidget(Widget widget) {
+		ClientUtil.removeAllChildren(centerPanel);
+		this.centerPanel.add(widget);
 	}
 }

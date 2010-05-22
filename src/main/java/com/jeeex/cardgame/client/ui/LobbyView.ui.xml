@@ -67,16 +67,16 @@
 		<g:west size="200">
 			<g:FlowPanel addStyleNames="{style.green}">
 				<g:Label>Lobby</g:Label>
-				<wgt:GameListWidget ui:field="gameList" />
+				<wgt:GameListView ui:field="gameList"/>
 			</g:FlowPanel>
 		</g:west>
 		<g:east size="200">
 			<c:ChatView ui:field="chatView" addStyleNames="{style.green}"/>
 		</g:east>
 		<g:center>
-			<g:HTMLPanel>
-				<p>Welcome to Dominion card game!</p>
-			</g:HTMLPanel>
+			<g:FlowPanel ui:field="centerPanel">
+				<g:Label>Please put stuff here...</g:Label>
+			</g:FlowPanel>
 		</g:center>
 	</g:DockLayoutPanel>
 </ui:UiBinder>
