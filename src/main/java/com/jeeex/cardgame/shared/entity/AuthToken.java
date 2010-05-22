@@ -1,5 +1,6 @@
 package com.jeeex.cardgame.shared.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,6 +18,7 @@ public class AuthToken implements IsSerializable {
 
 	@Id
 	@GeneratedValue
+	@GwtTransient
 	Long id;
 
 	String tokenName;
@@ -25,6 +27,10 @@ public class AuthToken implements IsSerializable {
 	@JoinColumn(name = "user", referencedColumnName = "id")
 	@GwtTransient
 	User user;
+
+	/** For GWT. */
+	@Column(name = "user", insertable = false, updatable = false)
+	Long userId;
 
 	public AuthToken() {
 	}
@@ -50,6 +56,17 @@ public class AuthToken implements IsSerializable {
 	}
 
 	public void setUser(User user) {
+		if (user.getId() != null) {
+			this.userId = user.getId();
+		}
 		this.user = user;
+	}
+
+	public String toString() {
+		return tokenName + ":" + userId;
+	}
+
+	public Long getUserId() {
+		return userId;
 	}
 }

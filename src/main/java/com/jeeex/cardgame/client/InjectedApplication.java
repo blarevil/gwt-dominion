@@ -37,14 +37,27 @@ public class InjectedApplication implements Runnable {
 
 	@Inject
 	MyEventBus ebus;
-	
+
 	@Inject
 	LobbyPresenter lobbyPresenter;
 
 	@Override
 	public void run() {
 		lobbyPresenter.init();
-		RootPanel.get().add((Widget)lobbyPresenter.getView());
+		RootPanel.get().add((Widget) lobbyPresenter.getView());
+		startMessageLoop();
+	}
+
+	public void startMessageLoop() {
+		// initialize
+		loop.setCounter(1);
+		Timer t = new Timer() {
+			@Override
+			public void run() {
+				loop.run();
+			}
+		};
+		t.schedule(1);
 	}
 
 	public void runWithoutLobby() {
@@ -63,14 +76,6 @@ public class InjectedApplication implements Runnable {
 		// register message loop.
 		RootPanel.get().add(mp.getView());
 
-		Timer timer = new Timer() {
-			@Override
-			public void run() {
-				loop.setCounter(1);
-				loop.run();
-			}
-		};
-		// run the XHR in timer.
-		timer.schedule(1);
+		startMessageLoop();
 	}
 }

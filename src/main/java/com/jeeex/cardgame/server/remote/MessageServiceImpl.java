@@ -7,8 +7,12 @@ import javax.persistence.EntityManager;
 
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
+import com.jeeex.cardgame.server.logic.AuthenticationChecker;
 import com.jeeex.cardgame.shared.entity.Message;
+import com.jeeex.cardgame.shared.remote.InvalidTokenException;
 import com.jeeex.cardgame.shared.remote.message.MessageService;
+import com.jeeex.cardgame.shared.remote.message.SendChatMessageRequest;
+import com.jeeex.cardgame.shared.remote.message.SendChatMessageResponse;
 import com.jeeex.cardgame.shared.remote.message.SendMessageRequest;
 import com.jeeex.cardgame.shared.remote.message.SendMessageResponse;
 import com.jeeex.cardgame.shared.remote.message.WaitForMessageRequest;
@@ -22,6 +26,9 @@ public class MessageServiceImpl implements MessageService {
 
 	@Inject
 	MessageNexus mn;
+
+	@Inject
+	AuthenticationChecker authCheck;
 
 	@Override
 	public SendMessageResponse sendMessage(SendMessageRequest request) {
@@ -43,5 +50,17 @@ public class MessageServiceImpl implements MessageService {
 				newArrayList(msg));
 		em.getTransaction().commit();
 		return response;
+	}
+
+	@Override
+	public SendChatMessageResponse sendChatMessage(
+			SendChatMessageRequest request) throws InvalidTokenException {
+		em.getTransaction().begin();
+		try {
+			authCheck.isValid(request.getAuthToken());
+		} finally {
+			em.getTransaction().commit();
+		}
+		return new SendChatMessageResponse();
 	}
 }

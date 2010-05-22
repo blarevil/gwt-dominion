@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 @Entity
-public class User {
+public class User implements IsSerializable {
 
 	@Id
 	@GeneratedValue

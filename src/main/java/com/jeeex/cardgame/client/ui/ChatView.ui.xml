@@ -22,10 +22,10 @@
 	</ui:style>
 	<g:DockLayoutPanel addStyleNames="{style.root}" unit="PX">
 		<g:south size="60">
-			<g:TextArea addStyleNames="{style.chatbox}"></g:TextArea>
+			<g:TextArea ui:field="chatBox" addStyleNames="{style.chatbox}"></g:TextArea>
 		</g:south>
 		<g:center>
-			<g:TextArea addStyleNames="{style.chathistory}"></g:TextArea>
+			<g:TextArea ui:field="chatHistory" addStyleNames="{style.chathistory}"></g:TextArea>
 		</g:center>
 	</g:DockLayoutPanel>
 </ui:UiBinder> 

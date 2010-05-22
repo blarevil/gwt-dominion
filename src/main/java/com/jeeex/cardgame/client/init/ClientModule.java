@@ -7,6 +7,7 @@ import com.google.inject.Singleton;
 import com.jeeex.cardgame.client.res.DefaultResource;
 import com.jeeex.cardgame.client.res.DefaultResource.GameListStyle;
 import com.jeeex.cardgame.client.res.DefaultResource.MyStyle;
+import com.jeeex.cardgame.client.ui.AuthTokenManager;
 import com.jeeex.cardgame.client.ui.MainView;
 
 public class ClientModule extends AbstractGinModule {
@@ -17,6 +18,7 @@ public class ClientModule extends AbstractGinModule {
 	protected void configure() {
 		bind(MainView.class).in(Singleton.class);
 		bind(DefaultResource.class).in(SINGLETON);
+		bind(AuthTokenManager.class).in(SINGLETON);
 	}
 
 	@Provides

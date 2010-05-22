@@ -60,15 +60,16 @@ public class UserServiceImpl implements UserService {
 			} catch (NoResultException exception) {
 				// Login failed.
 				em.getTransaction().rollback();
-				return new LoginResponse(false, "");
+				return new LoginResponse(false, null);
 			}
 
 			token.setUser(user);
+			// TODO(Jeeyoung Kim): Need better token generation scheme.
 			token.setTokenName(String.valueOf(System.currentTimeMillis()));
 			em.persist(token);
 		}
 		em.getTransaction().commit();
-		return new LoginResponse(true, token.getTokenName());
+		return new LoginResponse(true, token);
 	}
 
 	@Override
@@ -77,7 +78,7 @@ public class UserServiceImpl implements UserService {
 		{
 			Query q = em
 					.createQuery("DELETE from AuthToken token where token.tokenName = :tkn");
-			q.setParameter("tkn", request.getAuthToken());
+			q.setParameter("tkn", request.getAuthToken().getTokenName());
 			q.executeUpdate();
 		}
 		em.getTransaction().commit();

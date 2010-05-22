@@ -36,7 +36,7 @@ public class LobbyView extends AbstractLobbyView {
 	@UiField
 	Button refreshBtn;
 
-	@UiField
+	@UiField(provided = true)
 	ChatView chatView;
 
 	public GameListWidget getGamelist() {
@@ -46,6 +46,13 @@ public class LobbyView extends AbstractLobbyView {
 	@Inject
 	public LobbyView(GameListWidget gameList) {
 		this.gameList = gameList;
+	}
+
+	public void setChatView(ChatView view) {
+		this.chatView = view;
+	}
+
+	public void init() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

@@ -7,7 +7,12 @@ import javax.persistence.Query;
 
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
+import com.jeeex.cardgame.server.aop.UnderTransaction;
+import com.jeeex.cardgame.server.logic.AuthenticationChecker;
+import com.jeeex.cardgame.shared.entity.AuthToken;
 import com.jeeex.cardgame.shared.entity.GameRoom;
+import com.jeeex.cardgame.shared.entity.User;
+import com.jeeex.cardgame.shared.remote.InvalidTokenException;
 import com.jeeex.cardgame.shared.remote.lobby.CreateGameRequest;
 import com.jeeex.cardgame.shared.remote.lobby.CreateGameResponse;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListRequest;
@@ -18,6 +23,9 @@ import com.jeeex.cardgame.shared.remote.lobby.LobbyService;
 public class LobbyServiceImpl implements LobbyService {
 	@Inject
 	EntityManager em;
+
+	@Inject
+	AuthenticationChecker authCheck;
 
 	@Override
 	public GetGameListResponse getGameList(GetGameListRequest request) {
@@ -38,13 +46,25 @@ public class LobbyServiceImpl implements LobbyService {
 		}
 	}
 
+	@UnderTransaction
+	public User getUser(AuthToken token) {
+		return em.getReference(User.class, token.getUserId());
+	}
+
 	@Override
-	public CreateGameResponse createGame(CreateGameRequest request) {
+	public CreateGameResponse createGame(CreateGameRequest request)
+			throws InvalidTokenException {
 		em.getTransaction().begin();
-		GameRoom gr = new GameRoom();
-		gr.setName(request.getName());
-		em.persist(gr);
-		em.getTransaction().commit();
+		try {
+			AuthToken tkn = request.getAuthToken();
+			authCheck.isValid(tkn);
+			GameRoom gr = new GameRoom();
+			gr.setName(request.getName());
+			gr.setCreatedBy(getUser(tkn));
+			em.persist(gr);
+		} finally {
+			em.getTransaction().commit();
+		}
 		return new CreateGameResponse();
 	}
 }

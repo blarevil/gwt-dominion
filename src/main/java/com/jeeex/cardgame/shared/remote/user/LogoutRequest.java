@@ -1,21 +1,19 @@
 package com.jeeex.cardgame.shared.remote.user;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import com.jeeex.cardgame.annotation.GwtConstructor;
+import com.jeeex.cardgame.shared.entity.AuthToken;
+import com.jeeex.cardgame.shared.remote.Authenticated;
 
-public class LogoutRequest implements IsSerializable {
-	String authToken;
+public class LogoutRequest implements IsSerializable, Authenticated{
+	private AuthToken tkn;
 
-	@GwtConstructor
-	@SuppressWarnings("unused")
-	private LogoutRequest() {
+	@Override
+	public AuthToken getAuthToken() {
+		return tkn;
 	}
 
-	public LogoutRequest(String authToken) {
-		this.authToken = authToken;
-	}
-
-	public String getAuthToken() {
-		return authToken;
+	@Override
+	public void setAuthToken(AuthToken token) {
+		tkn = token;
 	}
 }

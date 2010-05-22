@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.util.EmptyCallback;
+import com.jeeex.cardgame.shared.entity.AuthToken;
 import com.jeeex.cardgame.shared.remote.lobby.CreateGameRequest;
 import com.jeeex.cardgame.shared.remote.lobby.CreateGameResponse;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListRequest;
@@ -22,7 +23,7 @@ import com.jeeex.cardgame.shared.remote.user.UserServiceAsync;
 
 public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 
-	private final AuthTokenManager tknMgr = new AuthTokenManager();
+	private final AuthTokenManager tknMgr;
 
 	private final class GameListCallback extends
 			EmptyCallback<GetGameListResponse> {
@@ -62,12 +63,24 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 
 	final UserServiceAsync userSvc;
 
+	final ChatPresenter chatPresenter;
+
 	@Inject
-	public LobbyPresenter(LobbyView view, LobbyServiceAsync lobbySvc,
-			UserServiceAsync userSvc) {
+	public LobbyPresenter(
+			// views
+			LobbyView view,
+			// presenters
+			ChatPresenter chatPresenter,
+			// services
+			LobbyServiceAsync lobbySvc,
+			UserServiceAsync userSvc,
+			// authtoken
+			AuthTokenManager tknMgr) {
 		this.view = view;
 		this.lobbySvc = lobbySvc;
 		this.userSvc = userSvc;
+		this.chatPresenter = chatPresenter;
+		this.tknMgr = tknMgr;
 	}
 
 	@Override
@@ -77,8 +90,12 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 
 	@Override
 	public void init() {
-		view.getLogoutButton().setEnabled(false);
+		chatPresenter.init();
+		// initialize
+		view.setChatView(chatPresenter.getView());
+		view.init();
 
+		view.getLogoutButton().setEnabled(false);
 		// initialize 'Refresh game' handler.
 		view.getRefreshButton().addClickHandler(new ClickHandler() {
 			@Override
@@ -117,33 +134,38 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 		view.getLogoutButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				String authToken = tknMgr.getAuthToken();
-				tknMgr.setAuthToken("");
-				userSvc.logout(new LogoutRequest(authToken),
-						new EmptyCallback<LogoutResponse>());
+				LogoutRequest req = new LogoutRequest();
+				req.setAuthToken(tknMgr.getAuthToken());
+				tknMgr.setAuthToken(null);
+				userSvc.logout(req, new EmptyCallback<LogoutResponse>());
 			}
 		});
 
+		registerCreateGame();
+
+		tknMgr.addHandler(new GenericHandler<AuthToken>() {
+			@Override
+			public void onEvent(AuthToken token) {
+				view.getAuthTokenLabel().setText(String.valueOf(token));
+				boolean loggedIn = token != null;
+				view.getLoginButton().setEnabled(!loggedIn);
+				view.getLogoutButton().setEnabled(loggedIn);
+			}
+		});
+	}
+
+	private void registerCreateGame() {
 		view.getCreateGameButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
 				String gameName = Window.prompt("Enter the game name:", "");
 				if (gameName != null) {
 					CreateGameRequest req = new CreateGameRequest();
+					req.setAuthToken(tknMgr.getAuthToken());
 					req.setName(gameName);
 					lobbySvc.createGame(req,
 							new EmptyCallback<CreateGameResponse>());
 				}
-			}
-		});
-
-		tknMgr.addHandler(new GenericHandler<String>() {
-			@Override
-			public void onEvent(String token) {
-				view.getAuthTokenLabel().setText(token);
-				boolean loggedIn = !token.equals("");
-				view.getLoginButton().setEnabled(!loggedIn);
-				view.getLogoutButton().setEnabled(loggedIn);
 			}
 		});
 	}

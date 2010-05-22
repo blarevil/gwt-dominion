@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import net.jcip.annotations.GuardedBy;
@@ -26,7 +27,7 @@ public class MessageNexus {
 	private volatile long currentCounter = 0;
 
 	private boolean currentCounterSet = false;
-	
+
 	@Inject
 	private Logger logger;
 
@@ -63,18 +64,25 @@ public class MessageNexus {
 		return msgSrcp.get().getMessage(nextCounter);
 	}
 
-	/** Set the internal counter of MessageNexus.
-	 * TODO(Jeeyoung Kim) refactor this to a provider.
-	 *  */
+	/**
+	 * Set the internal counter of MessageNexus. TODO(Jeeyoung Kim) refactor
+	 * this to a provider.
+	 * */
 	private void initCounter() {
 		EntityManager e = emp.get();
 		Query q = e
 				.createQuery("SELECT msg from Message msg ORDER BY msg.id DESC");
 		q.setMaxResults(1);
-		Message msg = (Message) q.getSingleResult();
-		logger.info("Setting counter: " + msg.getId());
-		currentCounter = msg.getId();
-		// this shouldn't be refactored.
-		currentCounterSet = true;
+		try {
+			Message msg = (Message) q.getSingleResult();
+			logger.info("Setting counter: " + msg.getId());
+			currentCounter = msg.getId();
+			currentCounterSet = true;
+		} catch (NoResultException exception) {
+			// no result. use 0.
+			logger.info("Setting counter: " + 0);
+			currentCounter = 0;
+			currentCounterSet = true;
+		}
 	}
 }
