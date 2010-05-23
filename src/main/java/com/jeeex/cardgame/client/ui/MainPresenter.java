@@ -9,7 +9,6 @@ import com.google.inject.Inject;
 import com.jeeex.cardgame.client.data.model.HandlerEndpoint;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
-import com.jeeex.cardgame.client.event.TypeConstants;
 import com.jeeex.cardgame.client.ui.chat.ChatEvent;
 import com.jeeex.cardgame.client.ui.chat.ChatHandler;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
@@ -28,15 +27,14 @@ public class MainPresenter implements Presenter<MainView> {
 	}
 
 	public void init() {
-		ebus.getHandlerManager().addHandler(TypeConstants.STRING,
-				new GenericHandler<String>() {
-					@Override
-					public void onEvent(String event) {
-						TextArea wgt = view.getChatHistoryArea();
-						String txt = wgt.getText();
-						wgt.setText(txt + event + '\n');
-					}
-				});
+		ebus.onPrintln(new GenericHandler<String>() {
+			@Override
+			public void onEvent(String event) {
+				TextArea wgt = view.getChatHistoryArea();
+				String txt = wgt.getText();
+				wgt.setText(txt + event + '\n');
+			}
+		});
 
 		// initialze chat endpoint
 		view.getChatMessageArea().addKeyPressHandler(new KeyPressHandler() {

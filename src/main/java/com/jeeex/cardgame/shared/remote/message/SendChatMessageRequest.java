@@ -18,6 +18,10 @@ public class SendChatMessageRequest implements IsSerializable, Authenticated {
 		return message;
 	}
 
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 	@Override
 	public void setAuthToken(AuthToken token) {
 		this.tkn = token;

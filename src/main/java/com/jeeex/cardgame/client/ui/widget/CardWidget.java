@@ -24,7 +24,7 @@ public class CardWidget extends Composite {
 	Label cardName;
 
 	@Inject
-	public CardWidget() {
+	CardWidget() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

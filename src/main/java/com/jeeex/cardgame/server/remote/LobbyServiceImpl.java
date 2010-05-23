@@ -3,11 +3,15 @@ package com.jeeex.cardgame.server.remote;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+
+import net.sf.gilead.core.PersistentBeanManager;
+import net.sf.gilead.core.hibernate.jpa.HibernateJpaUtil;
+import net.sf.gilead.core.store.stateless.StatelessProxyStore;
 
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
-import com.jeeex.cardgame.server.aop.UnderTransaction;
 import com.jeeex.cardgame.server.logic.AuthenticationChecker;
 import com.jeeex.cardgame.shared.entity.AuthToken;
 import com.jeeex.cardgame.shared.entity.GameRoom;
@@ -29,14 +33,26 @@ public class LobbyServiceImpl implements LobbyService {
 	@Inject
 	AuthenticationChecker authCheck;
 
+	@Inject
+	private EntityManagerFactory emf;
+
 	@Override
 	public GetGameListResponse getGameList(GetGameListRequest request) {
+		HibernateJpaUtil util = new HibernateJpaUtil();
+		util.setEntityManagerFactory(emf);
+		
+		PersistentBeanManager pbm = new PersistentBeanManager();
+		pbm.setPersistenceUtil(util);
+		pbm.setProxyStore(new StatelessProxyStore());
+
 		GetGameListResponse resp = new GetGameListResponse();
 		List<GameRoom> list = getList();
-		for (GameRoom gr : list) {
-			gr.sanitizeForGwt();
+		/*
+		for (GameRoom gr : list) {		
+			gr.sanitize();
 		}
-		resp.setRooms(list);
+		*/
+		resp.setRooms((List<GameRoom>) pbm.clone(list));
 		return resp;
 	}
 

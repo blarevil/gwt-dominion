@@ -56,8 +56,14 @@ public class GameRoom implements IsSerializable {
 		participating.add(user);
 	}
 
-	/** This is fucking nuts. find better way to do this.*/
-	public void sanitizeForGwt() {
+	/** This is fucking nuts. find better way to do this.
+	 * Maybe I should try using Gilead or something to automatically do this.
+	 *  */
+	public void sanitize() {
 		participating = new HashSet<User>(participating);
+	}
+
+	public Set<User> getParticipatingUsers() {
+		return participating;
 	}
 }

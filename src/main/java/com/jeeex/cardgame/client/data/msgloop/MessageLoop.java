@@ -1,9 +1,9 @@
 package com.jeeex.cardgame.client.data.msgloop;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.shared.remote.message.MessageServiceAsync;
 import com.jeeex.cardgame.shared.remote.message.WaitForMessageRequest;
 import com.jeeex.cardgame.shared.remote.message.WaitForMessageResponse;
@@ -18,8 +18,8 @@ public class MessageLoop implements Runnable {
 
 		@Override
 		public void onSuccess(WaitForMessageResponse result) {
-			// success is good.
-			GWT.log("FOO");
+			// publish the message.
+			ebus.messageReceived(result.getMessages());
 			counter++;
 			async.waitForMessage(new WaitForMessageRequest(counter), callback);
 		}
@@ -31,9 +31,11 @@ public class MessageLoop implements Runnable {
 
 	@Inject
 	private MessageServiceAsync async;
+	
+	@Inject
+	private MyEventBus ebus;
 
 	public MessageLoop() {
-		// initialze callback.
 		this.callback = new Callback();
 	}
 
@@ -42,7 +44,6 @@ public class MessageLoop implements Runnable {
 	}
 
 	public void run() {
-		// This method doesn't block!
 		async.waitForMessage(new WaitForMessageRequest(counter), callback);
 	}
 }

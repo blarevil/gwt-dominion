@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
 import com.jeeex.cardgame.server.logic.AuthenticationChecker;
+import com.jeeex.cardgame.shared.entity.ChatMessage;
 import com.jeeex.cardgame.shared.entity.Message;
 import com.jeeex.cardgame.shared.remote.InvalidTokenException;
 import com.jeeex.cardgame.shared.remote.message.MessageService;
@@ -56,10 +57,18 @@ public class MessageServiceImpl implements MessageService {
 	public SendChatMessageResponse sendChatMessage(
 			SendChatMessageRequest request) throws InvalidTokenException {
 		em.getTransaction().begin();
+		long id = 0;
 		try {
 			authCheck.isValid(request.getAuthToken());
+			ChatMessage cm = new ChatMessage();
+			cm.setMessage(request.getMessage());
+			em.persist(cm);
+			id = cm.getId();
 		} finally {
 			em.getTransaction().commit();
+			// this method has to be called AFTER commit...
+			// is there some better way to manage this workflow?
+			mn.updateCounter(id);
 		}
 		return new SendChatMessageResponse();
 	}

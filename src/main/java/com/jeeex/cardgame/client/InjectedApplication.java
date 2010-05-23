@@ -8,7 +8,6 @@ import com.jeeex.cardgame.client.console.Console;
 import com.jeeex.cardgame.client.data.msgloop.MessageLoop;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
-import com.jeeex.cardgame.client.event.TypeConstants;
 import com.jeeex.cardgame.client.ui.LobbyPresenter;
 import com.jeeex.cardgame.client.ui.MainPresenter;
 import com.jeeex.cardgame.client.util.EmptyCallback;
@@ -62,17 +61,16 @@ public class InjectedApplication implements Runnable {
 
 	public void runWithoutLobby() {
 		mp.init();
-		ebus.getHandlerManager().addHandler(TypeConstants.STRING,
-				new GenericHandler<String>() {
-					@Override
-					public void onEvent(String event) {
-						console.exec(event);
-						ChatMessage msg = new ChatMessage();
-						msg.setMessage(event);
-						async.sendMessage(new SendMessageRequest(msg),
-								new EmptyCallback<SendMessageResponse>());
-					}
-				});
+		ebus.onPrintln(new GenericHandler<String>() {
+			@Override
+			public void onEvent(String event) {
+				console.exec(event);
+				ChatMessage msg = new ChatMessage();
+				msg.setMessage(event);
+				async.sendMessage(new SendMessageRequest(msg),
+						new EmptyCallback<SendMessageResponse>());
+			}
+		});
 		// register message loop.
 		RootPanel.get().add(mp.getView());
 

@@ -5,7 +5,7 @@ import com.google.gwt.event.shared.GwtEvent.Type;
 
 public class DefaultEventBus implements EventBus {
 
-	private final HandlerManager mgr;
+	protected final HandlerManager mgr;
 
 	public DefaultEventBus(HandlerManager mgr) {
 		assert mgr != null;
@@ -14,10 +14,6 @@ public class DefaultEventBus implements EventBus {
 
 	@Override
 	public <E> void fire(Type<GenericHandler<E>> type, E e) {
-		getHandlerManager().fireEvent(new GenericEvent<E>(type, e));
-	}
-
-	public HandlerManager getHandlerManager() {
-		return mgr;
+		mgr.fireEvent(new GenericEvent<E>(type, e));
 	}
 }

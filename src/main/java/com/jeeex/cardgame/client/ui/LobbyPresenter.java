@@ -7,9 +7,8 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
-import com.jeeex.cardgame.client.event.TypeConstants;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
-import com.jeeex.cardgame.client.ui.widget.GameListView;
+import com.jeeex.cardgame.client.ui.widget.GameListPresenter;
 import com.jeeex.cardgame.client.util.EmptyCallback;
 import com.jeeex.cardgame.shared.entity.AuthToken;
 import com.jeeex.cardgame.shared.remote.lobby.CreateGameRequest;
@@ -33,7 +32,8 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 			EmptyCallback<GetGameListResponse> {
 		@Override
 		public void onSuccess(GetGameListResponse result) {
-			gameList.update(result.getRooms());
+			// TODO - this should be done directly via presenter.
+			gameListPresenter.update(result.getRooms());
 		}
 	}
 
@@ -71,7 +71,7 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 
 	private final MyEventBus ebus;
 
-	private final GameListView gameList;
+	private final GameListPresenter gameListPresenter;
 
 	@Inject
 	public LobbyPresenter(
@@ -80,7 +80,7 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 			// views
 			LobbyView view,
 			// TODO - inject presenter for this instead
-			GameListView gameList,
+			GameListPresenter gameListPresenter,
 			// presenters
 			ChatPresenter chatPresenter,
 			// services
@@ -90,7 +90,7 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 		this.view = view;
 		this.lobbySvc = lobbySvc;
 		this.userSvc = userSvc;
-		this.gameList = gameList;
+		this.gameListPresenter = gameListPresenter;
 		this.chatPresenter = chatPresenter;
 		this.tknMgr = tknMgr;
 		this.ebus = ebus;
@@ -103,7 +103,9 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 
 	@Override
 	public void init() {
+		// cascading init.
 		chatPresenter.init();
+		gameListPresenter.init();
 		// initialize
 		// should this be done via eventBus?
 		view.setChatView(chatPresenter.getView());
@@ -189,8 +191,7 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 				view.setCenterWidget(wgt);
 			}
 		};
-		ebus.getHandlerManager().addHandler(TypeConstants.CENTER_WIDGET,
-				handler);
-		ebus.setCenterWidget(gameList);
+		ebus.onSetCenterWidget(handler);
+		ebus.setCenterWidget(gameListPresenter.getView());
 	}
 }
