@@ -3,12 +3,7 @@ package com.jeeex.cardgame.server.remote;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-
-import net.sf.gilead.core.PersistentBeanManager;
-import net.sf.gilead.core.hibernate.jpa.HibernateJpaUtil;
-import net.sf.gilead.core.store.stateless.StatelessProxyStore;
 
 import com.google.inject.Inject;
 import com.google.inject.servlet.RequestScoped;
@@ -23,6 +18,8 @@ import com.jeeex.cardgame.shared.remote.lobby.GetGameListRequest;
 import com.jeeex.cardgame.shared.remote.lobby.GetGameListResponse;
 import com.jeeex.cardgame.shared.remote.lobby.JoinGameRequest;
 import com.jeeex.cardgame.shared.remote.lobby.JoinGameResponse;
+import com.jeeex.cardgame.shared.remote.lobby.LeaveGameRequest;
+import com.jeeex.cardgame.shared.remote.lobby.LeaveGameResponse;
 import com.jeeex.cardgame.shared.remote.lobby.LobbyService;
 
 @RequestScoped
@@ -33,26 +30,15 @@ public class LobbyServiceImpl implements LobbyService {
 	@Inject
 	AuthenticationChecker authCheck;
 
-	@Inject
-	private EntityManagerFactory emf;
-
 	@Override
 	public GetGameListResponse getGameList(GetGameListRequest request) {
-		HibernateJpaUtil util = new HibernateJpaUtil();
-		util.setEntityManagerFactory(emf);
-		
-		PersistentBeanManager pbm = new PersistentBeanManager();
-		pbm.setPersistenceUtil(util);
-		pbm.setProxyStore(new StatelessProxyStore());
-
 		GetGameListResponse resp = new GetGameListResponse();
 		List<GameRoom> list = getList();
-		/*
-		for (GameRoom gr : list) {		
-			gr.sanitize();
+		// better way to "clean" stuff.
+		for (GameRoom gr : list) {
+			gr.clean();
 		}
-		*/
-		resp.setRooms((List<GameRoom>) pbm.clone(list));
+		resp.setRooms(list);
 		return resp;
 	}
 
@@ -101,5 +87,11 @@ public class LobbyServiceImpl implements LobbyService {
 			em.getTransaction().commit();
 		}
 		return new JoinGameResponse();
+	}
+
+	@Override
+	public LeaveGameResponse leaveGame(LeaveGameRequest request)
+			throws InvalidTokenException {
+		return new LeaveGameResponse();
 	}
 }

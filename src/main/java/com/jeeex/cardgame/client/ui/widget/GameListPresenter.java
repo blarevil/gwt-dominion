@@ -9,7 +9,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.ui.AuthTokenManager;
+import com.jeeex.cardgame.client.ui.GamePresenter;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.util.EmptyCallback;
 import com.jeeex.cardgame.shared.entity.GameRoom;
@@ -17,6 +20,7 @@ import com.jeeex.cardgame.shared.remote.lobby.JoinGameRequest;
 import com.jeeex.cardgame.shared.remote.lobby.JoinGameResponse;
 import com.jeeex.cardgame.shared.remote.lobby.LobbyServiceAsync;
 
+@Singleton
 public class GameListPresenter implements Presenter<GameListView> {
 
 	private class GameClickHandler implements ClickHandler {
@@ -30,14 +34,12 @@ public class GameListPresenter implements Presenter<GameListView> {
 		@Override
 		public void onClick(ClickEvent event) {
 			setSelected(g);
-			
-			// initialize popup panel.
-			popupPanel.gameName.setText("NAME:" + g.getName());
-			popupPanel.creatorName.setText("CREATOR:"
-					+ g.getCreatedBy().getUsername());
-			popupPanel.joinedPeople.setText(g.getParticipatingUsers()
-					.toString());
-			
+
+			// initialize popup panel. this can probably be refactored too.
+			popupPanel.configForShowing(g.getName(),
+					g.getCreatedBy().getUsername(), 
+					g.getParticipatingUsers().toString());
+
 			// location.
 			int left = event.getNativeEvent().getClientX();
 			int top = event.getNativeEvent().getClientY();
@@ -66,15 +68,24 @@ public class GameListPresenter implements Presenter<GameListView> {
 			joinGame.addClickHandler(new ClickHandler() {
 				@Override
 				public void onClick(ClickEvent event) {
-					// hm... i think this approach is right.
-					// ebus.setCenterWidget(new Label("HIIII"));
 					JoinGameRequest r = new JoinGameRequest();
 					r.setAuthToken(tknMgr.get());
 					r.setGameRoom(selected);
+					// TODO(Jeeyoung Kim): Replace EmptyCallback with something else.
 					lobbySvc.joinGame(r, new EmptyCallback<JoinGameResponse>());
+					// this should be done from the CALLBACK function.
+					ebus.setCenterWidget(gamePresenter.getView());
+					view.hidePopup();
 				}
 			});
 			initWidget(fp);
+		}
+
+		public void configForShowing(String name, String creator,
+				String participating) {
+			gameName.setText("name:" + name);
+			creatorName.setText("creator:" + creator);
+			joinedPeople.setText(participating);
 		}
 	}
 
@@ -84,12 +95,19 @@ public class GameListPresenter implements Presenter<GameListView> {
 	@Inject
 	private LobbyServiceAsync lobbySvc;
 
-	GameRoom selected = null;
+	/** Currently selected game room. */
+	private GameRoom selected = null;
 
 	private PopupWidget popupPanel = new PopupWidget();
 
 	@Inject
 	private GameListView view;
+	
+	@Inject
+	private MyEventBus ebus;
+	
+	@Inject
+	private GamePresenter gamePresenter;
 
 	@Inject
 	GameListPresenter() {
@@ -102,13 +120,18 @@ public class GameListPresenter implements Presenter<GameListView> {
 
 	@Override
 	public void init() {
+		// cascade init sequence
+		gamePresenter.init();
 		view.setPopupPanel(popupPanel);
+		// better way to do this via assisted inject.
+		gamePresenter.setGameListPresenter(this);
 	}
 
 	public void setSelected(GameRoom g) {
 		this.selected = g;
 	}
 
+	/** Update list of game rooms displayed by the view. */
 	public void update(List<GameRoom> rooms) {
 		view.table.removeAllRows();
 		int row = 0;

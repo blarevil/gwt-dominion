@@ -7,10 +7,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.client.res.DefaultResource.GameListStyle;
 
-/**
- * TODO(Jeeyoung Kim) This widget is big giant code soup. Figure out how to make
- * this better...
- */
 public class GameListView extends Composite {
 	/** Underlying table object. */
 	// TODO - change the visibility of this object.
@@ -50,8 +46,13 @@ public class GameListView extends Composite {
 		popup.add(popupInternals);
 	}
 
+	/** Show the popup panel at some random place. */
 	public void showPopupPanelAt(int left, int top) {
 		popup.setPopupPosition(left, top);
 		popup.show();
+	}
+
+	public void hidePopup() {
+		popup.hide();
 	}
 }

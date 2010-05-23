@@ -8,4 +8,9 @@ public class InvalidTokenException extends Exception implements
 
 	public InvalidTokenException() {
 	}
+
+	@Override
+	public String toString() {
+		return "InvalidTokenException";
+	}
 }

@@ -8,6 +8,7 @@ import com.google.inject.Provider;
 
 public class EntityManagerProvider implements Provider<EntityManager> {
 	@Inject EntityManagerFactory emf;
+
 	@Override
 	public EntityManager get() {
 		return emf.createEntityManager();

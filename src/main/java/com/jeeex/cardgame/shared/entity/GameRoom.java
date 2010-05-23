@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @Entity
-public class GameRoom implements IsSerializable {
+public class GameRoom implements IsSerializable, Cleanable {
 
 	@Id
 	@GeneratedValue
@@ -56,14 +56,11 @@ public class GameRoom implements IsSerializable {
 		participating.add(user);
 	}
 
-	/** This is fucking nuts. find better way to do this.
-	 * Maybe I should try using Gilead or something to automatically do this.
-	 *  */
-	public void sanitize() {
-		participating = new HashSet<User>(participating);
-	}
-
 	public Set<User> getParticipatingUsers() {
 		return participating;
+	}
+
+	public void clean() {
+		participating = new HashSet<User>(participating);
 	}
 }

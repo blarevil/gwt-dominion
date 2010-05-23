@@ -36,4 +36,26 @@ public class User implements IsSerializable {
 	public String toString() {
 		return username;
 	}
+
+	@Override
+	public int hashCode() {
+		return username.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
 }

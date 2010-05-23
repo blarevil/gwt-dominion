@@ -66,10 +66,10 @@ public class MessageServiceImpl implements MessageService {
 			id = cm.getId();
 		} finally {
 			em.getTransaction().commit();
-			// this method has to be called AFTER commit...
-			// is there some better way to manage this workflow?
-			mn.updateCounter(id);
 		}
+		// this method has to be called AFTER commit...
+		// is there some better way to manage this workflow?
+		mn.updateCounter(id);
 		return new SendChatMessageResponse();
 	}
 }

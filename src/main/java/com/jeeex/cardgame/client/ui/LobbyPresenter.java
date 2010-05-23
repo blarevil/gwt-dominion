@@ -101,6 +101,10 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 		return view;
 	}
 
+	/**
+	 * This should be refactored. <br>
+	 * 1. all the handlers to menu buttons should be refactored into another view.
+	 * */
 	@Override
 	public void init() {
 		// cascading init.
@@ -168,6 +172,15 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 				view.getLogoutButton().setEnabled(loggedIn);
 			}
 		});
+
+		GenericHandler<Widget> handler = new GenericHandler<Widget>() {
+			@Override
+			public void onEvent(Widget wgt) {
+				view.setCenterWidget(wgt);
+			}
+		};
+		ebus.onSetCenterWidget(handler);
+		ebus.setCenterWidget(gameListPresenter.getView());
 	}
 
 	private void registerCreateGame() {
@@ -184,14 +197,5 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 				}
 			}
 		});
-
-		GenericHandler<Widget> handler = new GenericHandler<Widget>() {
-			@Override
-			public void onEvent(Widget wgt) {
-				view.setCenterWidget(wgt);
-			}
-		};
-		ebus.onSetCenterWidget(handler);
-		ebus.setCenterWidget(gameListPresenter.getView());
 	}
 }

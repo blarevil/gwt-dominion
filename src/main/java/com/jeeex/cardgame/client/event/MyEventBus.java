@@ -13,16 +13,13 @@ import com.jeeex.cardgame.shared.entity.Message;
  * The main eventbus.
  * <p>
  * All the global events should go through this event bus.
- * 
- * Instead of depending on {@link #getHandlerManager()}, i should create helper
- * methods for handlers too.
  */
 @Singleton
 public class MyEventBus extends DefaultEventBus {
-	// TYPE CONSTANTS.
-	public static final Type<GenericHandler<Widget>> CENTER_WIDGET = new Type<GenericHandler<Widget>>();
-	public static final Type<GenericHandler<String>> PRINTLN = new Type<GenericHandler<String>>();
+	private static final Type<GenericHandler<Widget>> CENTER_WIDGET = new Type<GenericHandler<Widget>>();
+	private static final Type<GenericHandler<String>> PRINTLN = new Type<GenericHandler<String>>();
 	private static final Type<GenericHandler<List<Message>>> MESSAGES = new Type<GenericHandler<List<Message>>>();
+	private static final Type<GenericHandler<Widget>> MENU_WIDGET = new Type<GenericHandler<Widget>>();
 
 	@Inject
 	public MyEventBus(HandlerManager mgr) {
@@ -33,16 +30,22 @@ public class MyEventBus extends DefaultEventBus {
 	// Message firing methods
 	// ////////////////////////
 
-	// event firing methods.
+	/** Print a line to chat console. */
 	public void println(String msg) {
 		fire(PRINTLN, msg);
 	}
 
-	// set the center widget of the lobby.
+	/** Set the center widget for the lobby. */
 	public void setCenterWidget(Widget widget) {
 		fire(CENTER_WIDGET, widget);
 	}
 
+	/** Set the menu widget for the lobby. */
+	public void setMenuWidget(Widget widget) {
+		fire(MENU_WIDGET, widget);
+	}
+
+	/** Invoked whenever a new message is received from the message loop. */
 	public void messageReceived(List<Message> msg) {
 		fire(MESSAGES, msg);
 	}
@@ -57,6 +60,10 @@ public class MyEventBus extends DefaultEventBus {
 
 	public void onSetCenterWidget(GenericHandler<Widget> handler) {
 		mgr.addHandler(CENTER_WIDGET, handler);
+	}
+
+	public void onSetMenuWidget(GenericHandler<Widget> handler) {
+		mgr.addHandler(MENU_WIDGET, handler);
 	}
 
 	public void onMessageReceived(GenericHandler<List<Message>> handler) {
