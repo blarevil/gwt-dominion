@@ -81,7 +81,8 @@ public class LobbyServiceImpl implements LobbyService {
 			// get gameroom.
 			GameRoom gr = em.getReference(GameRoom.class, request.getGameRoom()
 					.getId());
-			gr.addParticipating(user);
+			user.joinGame(gr);
+			// gr.addParticipating(user);
 			em.persist(gr);
 		} finally {
 			em.getTransaction().commit();
@@ -92,6 +93,11 @@ public class LobbyServiceImpl implements LobbyService {
 	@Override
 	public LeaveGameResponse leaveGame(LeaveGameRequest request)
 			throws InvalidTokenException {
+		em.getTransaction().begin();
+		User user = authCheck.getUser(request.getAuthToken());
+		user.setJoinedRoom(null);
+		em.persist(user);
+		em.getTransaction().commit();
 		return new LeaveGameResponse();
 	}
 }

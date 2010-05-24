@@ -10,7 +10,7 @@ import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.ui.LobbyPresenter;
 import com.jeeex.cardgame.client.ui.MainPresenter;
-import com.jeeex.cardgame.client.util.EmptyCallback;
+import com.jeeex.cardgame.client.util.BaseCallback;
 import com.jeeex.cardgame.shared.entity.ChatMessage;
 import com.jeeex.cardgame.shared.remote.message.MessageServiceAsync;
 import com.jeeex.cardgame.shared.remote.message.SendMessageRequest;
@@ -68,7 +68,7 @@ public class InjectedApplication implements Runnable {
 				ChatMessage msg = new ChatMessage();
 				msg.setMessage(event);
 				async.sendMessage(new SendMessageRequest(msg),
-						new EmptyCallback<SendMessageResponse>());
+						new BaseCallback<SendMessageResponse>());
 			}
 		});
 		// register message loop.

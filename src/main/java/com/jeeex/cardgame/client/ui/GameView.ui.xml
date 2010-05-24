@@ -4,8 +4,14 @@
 	<ui:style>
 		
 	</ui:style>
-	<g:HTMLPanel>
-		GameView.<br/>
-		Press this <g:Button ui:field="leaveBtn">button</g:Button> to return to the game list view.
-	</g:HTMLPanel>
+	<g:DockLayoutPanel unit="PCT" width="100%" height="100%">
+		<g:north size="50">
+			<g:HTMLPanel>
+				<g:Button ui:field="leaveBtn">leave</g:Button>
+			</g:HTMLPanel>
+		</g:north>
+		<g:center>
+			<g:Label>SOUTH PANEL</g:Label>
+		</g:center>
+	</g:DockLayoutPanel>
 </ui:UiBinder> 

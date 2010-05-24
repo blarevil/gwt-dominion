@@ -9,7 +9,7 @@ import com.google.inject.Inject;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
-import com.jeeex.cardgame.client.util.EmptyCallback;
+import com.jeeex.cardgame.client.util.BaseCallback;
 import com.jeeex.cardgame.shared.entity.ChatMessage;
 import com.jeeex.cardgame.shared.entity.Message;
 import com.jeeex.cardgame.shared.remote.message.MessageServiceAsync;
@@ -52,7 +52,7 @@ public class ChatPresenter implements Presenter<ChatView> {
 					req.setMessage(msg);
 					req.setAuthToken(tknMgr.get());
 					msgSvc.sendChatMessage(req,
-							new EmptyCallback<SendChatMessageResponse>());
+							new BaseCallback<SendChatMessageResponse>());
 				}
 			}
 		});

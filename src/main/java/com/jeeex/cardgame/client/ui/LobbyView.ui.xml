@@ -7,21 +7,17 @@
 			height: 500px;
 			width: 900px;
 		}
-		
 		.debug {
 			width: 100%;
 			height: 100%;
 			background-color: green;
 		}
-		
 		.red {
 			background-color: red;
 		}
-		
 		.green {
 			background-color: #88FF88;
 		}
-		
 		.button {
 			width: 100px;
 		}
@@ -29,21 +25,7 @@
 	<ui:with field='res' type='com.jeeex.cardgame.client.res.DefaultResource' />
 	<g:DockLayoutPanel unit="PX" addStyleNames="{style.gamepanel}">
 		<g:north size="33">
-			<g:HTMLPanel addStyleNames="{style.red}">
-				<wgt:FlowTableWidget>
-					<g:Button addStyleNames="{style.button}" ui:field="createGameBtn">Create
-						game</g:Button>
-					<g:Button addStyleNames="{style.button}" ui:field="refreshBtn">Refresh
-						game</g:Button>
-					<g:Button addStyleNames="{style.button}">Preferences</g:Button>
-					<g:Button addStyleNames="{style.button}" ui:field="loginBtn">Login</g:Button>
-					<g:Button addStyleNames="{style.button}" ui:field="logoutBtn">Logout</g:Button>
-					<g:Button addStyleNames="{style.button}" ui:field="createUserBtn">Create
-						User</g:Button>
-					<g:Label>AuthToken:</g:Label>
-					<g:Label ui:field="debugAuthTokenLbl"></g:Label>
-				</wgt:FlowTableWidget>
-			</g:HTMLPanel>
+			<g:FlowPanel addStyleNames="{style.red}" ui:field="menuPanel"/>
 		</g:north>
 		<g:east size="200">
 			<c:ChatView ui:field="chatView" addStyleNames="{style.green}" />

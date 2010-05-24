@@ -14,7 +14,7 @@ import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.ui.AuthTokenManager;
 import com.jeeex.cardgame.client.ui.GamePresenter;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
-import com.jeeex.cardgame.client.util.EmptyCallback;
+import com.jeeex.cardgame.client.util.BaseCallback;
 import com.jeeex.cardgame.shared.entity.GameRoom;
 import com.jeeex.cardgame.shared.remote.lobby.JoinGameRequest;
 import com.jeeex.cardgame.shared.remote.lobby.JoinGameResponse;
@@ -22,7 +22,6 @@ import com.jeeex.cardgame.shared.remote.lobby.LobbyServiceAsync;
 
 @Singleton
 public class GameListPresenter implements Presenter<GameListView> {
-
 	private class GameClickHandler implements ClickHandler {
 		/** GameRoom row to attach the handler to. */
 		private final GameRoom g;
@@ -36,9 +35,8 @@ public class GameListPresenter implements Presenter<GameListView> {
 			setSelected(g);
 
 			// initialize popup panel. this can probably be refactored too.
-			popupPanel.configForShowing(g.getName(),
-					g.getCreatedBy().getUsername(), 
-					g.getParticipatingUsers().toString());
+			popupPanel.configForShowing(g.getName(), g.getCreatedBy()
+					.getUsername(), g.getParticipatingUsers().toString());
 
 			// location.
 			int left = event.getNativeEvent().getClientX();
@@ -47,7 +45,23 @@ public class GameListPresenter implements Presenter<GameListView> {
 		}
 	}
 
+	private final class JoinGameClick implements ClickHandler {
+		@Override
+		public void onClick(ClickEvent event) {
+			JoinGameRequest r = new JoinGameRequest();
+			r.setAuthToken(tknMgr.get());
+			r.setGameRoom(selected);
+			// TODO(Jeeyoung Kim): Replace EmptyCallback with something else.
+			lobbySvc.joinGame(r, new BaseCallback<JoinGameResponse>());
+			// this should be done from the CALLBACK function.
+			ebus.setCenterWidget(gamePresenter.getView());
+			ebus.setMenuWidget(new Label("Menu has replaced."));
+			view.hidePopup();
+		}
+	}
+
 	class PopupWidget extends Composite {
+
 		Label gameName = new Label();
 		Label creatorName = new Label();
 		Label joinedPeople = new Label();
@@ -65,19 +79,7 @@ public class GameListPresenter implements Presenter<GameListView> {
 			fp.add(joinGame);
 
 			// register events
-			joinGame.addClickHandler(new ClickHandler() {
-				@Override
-				public void onClick(ClickEvent event) {
-					JoinGameRequest r = new JoinGameRequest();
-					r.setAuthToken(tknMgr.get());
-					r.setGameRoom(selected);
-					// TODO(Jeeyoung Kim): Replace EmptyCallback with something else.
-					lobbySvc.joinGame(r, new EmptyCallback<JoinGameResponse>());
-					// this should be done from the CALLBACK function.
-					ebus.setCenterWidget(gamePresenter.getView());
-					view.hidePopup();
-				}
-			});
+			joinGame.addClickHandler(joinGameClick);
 			initWidget(fp);
 		}
 
@@ -88,6 +90,8 @@ public class GameListPresenter implements Presenter<GameListView> {
 			joinedPeople.setText(participating);
 		}
 	}
+
+	JoinGameClick joinGameClick = new JoinGameClick();
 
 	@Inject
 	private AuthTokenManager tknMgr;
@@ -102,10 +106,10 @@ public class GameListPresenter implements Presenter<GameListView> {
 
 	@Inject
 	private GameListView view;
-	
+
 	@Inject
 	private MyEventBus ebus;
-	
+
 	@Inject
 	private GamePresenter gamePresenter;
 
@@ -120,11 +124,12 @@ public class GameListPresenter implements Presenter<GameListView> {
 
 	@Override
 	public void init() {
-		// cascade init sequence
-		gamePresenter.init();
+		// init the view.
 		view.setPopupPanel(popupPanel);
-		// better way to do this via assisted inject.
+
+		// cascade init sequence
 		gamePresenter.setGameListPresenter(this);
+		gamePresenter.init();
 	}
 
 	public void setSelected(GameRoom g) {

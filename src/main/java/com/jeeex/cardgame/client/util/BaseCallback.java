@@ -4,7 +4,10 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public class EmptyCallback<T> implements AsyncCallback<T> {
+/**
+ * Base for all the callbacks.
+ */
+public class BaseCallback<T> implements AsyncCallback<T> {
 	/**
 	 * The default failure behavior is using Window.alert() to prevent silent
 	 * consumption of the error messages.

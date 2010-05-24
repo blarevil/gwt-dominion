@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -24,8 +24,7 @@ public class GameRoom implements IsSerializable, Cleanable {
 	@OneToOne(optional = false, fetch = FetchType.EAGER)
 	private User createdBy;
 
-	// is this relation 1-many? figure out if i'm right...
-	@OneToMany(targetEntity = User.class, fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy="joinedRooms")
 	private Set<User> participating = new HashSet<User>();
 
 	public Long getId() {
@@ -52,15 +51,36 @@ public class GameRoom implements IsSerializable, Cleanable {
 		this.createdBy = createdBy;
 	}
 
-	public void addParticipating(User user) {
-		participating.add(user);
-	}
-
 	public Set<User> getParticipatingUsers() {
 		return participating;
 	}
 
 	public void clean() {
 		participating = new HashSet<User>(participating);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GameRoom other = (GameRoom) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 }

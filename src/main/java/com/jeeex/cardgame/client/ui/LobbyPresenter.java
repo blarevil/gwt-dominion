@@ -1,73 +1,19 @@
 package com.jeeex.cardgame.client.ui;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.ui.widget.GameListPresenter;
-import com.jeeex.cardgame.client.util.EmptyCallback;
-import com.jeeex.cardgame.shared.entity.AuthToken;
-import com.jeeex.cardgame.shared.remote.lobby.CreateGameRequest;
-import com.jeeex.cardgame.shared.remote.lobby.CreateGameResponse;
-import com.jeeex.cardgame.shared.remote.lobby.GetGameListRequest;
-import com.jeeex.cardgame.shared.remote.lobby.GetGameListResponse;
-import com.jeeex.cardgame.shared.remote.lobby.LobbyServiceAsync;
-import com.jeeex.cardgame.shared.remote.user.CreateUserRequest;
-import com.jeeex.cardgame.shared.remote.user.CreateUserResponse;
-import com.jeeex.cardgame.shared.remote.user.LoginRequest;
-import com.jeeex.cardgame.shared.remote.user.LoginResponse;
-import com.jeeex.cardgame.shared.remote.user.LogoutRequest;
-import com.jeeex.cardgame.shared.remote.user.LogoutResponse;
-import com.jeeex.cardgame.shared.remote.user.UserServiceAsync;
 
-public class LobbyPresenter implements Presenter<AbstractLobbyView> {
-
-	private final AuthTokenManager tknMgr;
-
-	private final class GameListCallback extends
-			EmptyCallback<GetGameListResponse> {
-		@Override
-		public void onSuccess(GetGameListResponse result) {
-			// TODO - this should be done directly via presenter.
-			gameListPresenter.update(result.getRooms());
-		}
-	}
-
-	private final class LoginCallback extends EmptyCallback<LoginResponse> {
-		@Override
-		public void onSuccess(LoginResponse result) {
-			if (result.isSuccessful()) {
-				tknMgr.set(result.getAuthToken());
-				Window.alert("Login completed. Token:" + result.getAuthToken());
-			} else {
-				Window.alert("Login failed.");
-			}
-		}
-	}
-
-	private final class CreateUserCallback extends
-			EmptyCallback<CreateUserResponse> {
-		@Override
-		public void onSuccess(CreateUserResponse result) {
-			if (result.isSuccess()) {
-				Window.alert("New user successfully created.");
-			} else {
-				Window.alert("FAILED.");
-			}
-		}
-	}
-
+public class LobbyPresenter implements Presenter<LobbyView> {
+	/** Underlying view. */
 	final LobbyView view;
 
-	final LobbyServiceAsync lobbySvc;
-
-	final UserServiceAsync userSvc;
-
-	final ChatPresenter chatPresenter;
+	private final ChatPresenter chatPresenter;
+	
+	private final LobbyMenuPresenter menuPresenter;
 
 	private final MyEventBus ebus;
 
@@ -75,29 +21,23 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 
 	@Inject
 	public LobbyPresenter(
-	// ebus
+			// ebus
 			MyEventBus ebus,
 			// views
 			LobbyView view,
-			// TODO - inject presenter for this instead
-			GameListPresenter gameListPresenter,
 			// presenters
 			ChatPresenter chatPresenter,
-			// services
-			LobbyServiceAsync lobbySvc, UserServiceAsync userSvc,
-			// authtoken
-			AuthTokenManager tknMgr) {
+			LobbyMenuPresenter menuPresenter,
+			GameListPresenter gameListPresenter) {
 		this.view = view;
-		this.lobbySvc = lobbySvc;
-		this.userSvc = userSvc;
-		this.gameListPresenter = gameListPresenter;
 		this.chatPresenter = chatPresenter;
-		this.tknMgr = tknMgr;
+		this.menuPresenter = menuPresenter;
+		this.gameListPresenter = gameListPresenter;
 		this.ebus = ebus;
 	}
 
 	@Override
-	public AbstractLobbyView getView() {
+	public LobbyView getView() {
 		return view;
 	}
 
@@ -107,95 +47,33 @@ public class LobbyPresenter implements Presenter<AbstractLobbyView> {
 	 * */
 	@Override
 	public void init() {
-		// cascading init.
+		// cascade-init presenters.
 		chatPresenter.init();
 		gameListPresenter.init();
-		// initialize
+		// TODO(Jeeyoung Kim) Figure out how to use assisted inject.
+		menuPresenter.setGameListPresenter(gameListPresenter);
+		menuPresenter.init();
+
+		// initialize view.
 		// should this be done via eventBus?
 		view.setChatView(chatPresenter.getView());
 		view.init();
 
-		view.getLogoutButton().setEnabled(false);
-		// initialize 'Refresh game' handler.
-		view.getRefreshButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				lobbySvc.getGameList(new GetGameListRequest(),
-						new GameListCallback());
-			}
-		});
-
-		// initialize 'create game' handler.
-		view.getCreateUserButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				// TODO:(Jeeyoung Kim)
-				// Window.prompt is a Bad UI.
-				String newUserName = Window.prompt("Name of the new user", "");
-				if (newUserName != null) {
-					userSvc.createUser(new CreateUserRequest(newUserName),
-							new CreateUserCallback());
-				}
-			}
-		});
-
-		// login button handler.
-		view.getLoginButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				String loginUsername = Window.prompt(
-						"Log in with the following user:", "");
-				LoginRequest request = new LoginRequest(loginUsername);
-				userSvc.login(request, new LoginCallback());
-			}
-		});
-
-		// logout button handler.
-		view.getLogoutButton().addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				LogoutRequest req = new LogoutRequest();
-				req.setAuthToken(tknMgr.get());
-				tknMgr.set(null);
-				userSvc.logout(req, new EmptyCallback<LogoutResponse>());
-			}
-		});
-
-		registerCreateGame();
-
-		tknMgr.addHandler(new GenericHandler<AuthToken>() {
-			@Override
-			public void onEvent(AuthToken token) {
-				view.getAuthTokenLabel().setText(String.valueOf(token));
-				boolean loggedIn = token != null;
-				view.getLoginButton().setEnabled(!loggedIn);
-				view.getLogoutButton().setEnabled(loggedIn);
-			}
-		});
-
-		GenericHandler<Widget> handler = new GenericHandler<Widget>() {
+		// wire event bus to mutate view.
+		ebus.onSetCenterWidget(new GenericHandler<Widget>() {
 			@Override
 			public void onEvent(Widget wgt) {
 				view.setCenterWidget(wgt);
 			}
-		};
-		ebus.onSetCenterWidget(handler);
-		ebus.setCenterWidget(gameListPresenter.getView());
-	}
-
-	private void registerCreateGame() {
-		view.getCreateGameButton().addClickHandler(new ClickHandler() {
+		});
+		ebus.onSetMenuWidget(new GenericHandler<Widget>() {
 			@Override
-			public void onClick(ClickEvent event) {
-				String gameName = Window.prompt("Enter the game name:", "");
-				if (gameName != null) {
-					CreateGameRequest req = new CreateGameRequest();
-					req.setAuthToken(tknMgr.get());
-					req.setName(gameName);
-					lobbySvc.createGame(req,
-							new EmptyCallback<CreateGameResponse>());
-				}
+			public void onEvent(Widget wgt) {
+				view.setMenuWidget(wgt);
 			}
 		});
+
+		ebus.setCenterWidget(gameListPresenter.getView());
+		ebus.setMenuWidget(menuPresenter.getView());
 	}
 }

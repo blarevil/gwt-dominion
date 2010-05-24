@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -20,6 +21,7 @@ public class MyEventBus extends DefaultEventBus {
 	private static final Type<GenericHandler<String>> PRINTLN = new Type<GenericHandler<String>>();
 	private static final Type<GenericHandler<List<Message>>> MESSAGES = new Type<GenericHandler<List<Message>>>();
 	private static final Type<GenericHandler<Widget>> MENU_WIDGET = new Type<GenericHandler<Widget>>();
+	private static final Type<GenericHandler<IsSerializable>> RPC_RESPONSE = new Type<GenericHandler<IsSerializable>>();
 
 	@Inject
 	public MyEventBus(HandlerManager mgr) {
@@ -50,6 +52,10 @@ public class MyEventBus extends DefaultEventBus {
 		fire(MESSAGES, msg);
 	}
 
+	public void rpcReceived(IsSerializable rpcResponse) {
+		fire(RPC_RESPONSE, rpcResponse);
+	}
+
 	// ////////////////////////
 	// Handler registeration methods
 	// ////////////////////////
@@ -68,5 +74,9 @@ public class MyEventBus extends DefaultEventBus {
 
 	public void onMessageReceived(GenericHandler<List<Message>> handler) {
 		mgr.addHandler(MESSAGES, handler);
+	}
+
+	public void onRpcReceived(GenericHandler<IsSerializable> handler) {
+		mgr.addHandler(RPC_RESPONSE, handler);
 	}
 }

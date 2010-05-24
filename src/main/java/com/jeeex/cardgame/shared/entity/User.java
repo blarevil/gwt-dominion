@@ -1,10 +1,17 @@
 package com.jeeex.cardgame.shared.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
+import com.google.gwt.user.client.rpc.GwtTransient;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 @Entity
@@ -16,6 +23,11 @@ public class User implements IsSerializable {
 
 	@Column(unique = true)
 	String username;
+
+	@GwtTransient
+	@ManyToMany
+	@JoinTable(name = "User_GameRoom", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "GAMEROOM_ID"))
+	List<GameRoom> joinedRooms = new ArrayList<GameRoom>();
 
 	public Long getId() {
 		return id;
@@ -57,5 +69,17 @@ public class User implements IsSerializable {
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
+	}
+
+	public List<GameRoom> getJoinedRooms() {
+		return joinedRooms;
+	}
+
+	public void setJoinedRoom(List<GameRoom> room) {
+		this.joinedRooms = room;
+	}
+
+	public void joinGame(GameRoom room) {
+		joinedRooms.add(room);
 	}
 }

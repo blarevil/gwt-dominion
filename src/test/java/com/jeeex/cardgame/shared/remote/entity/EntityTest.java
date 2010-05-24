@@ -1,6 +1,7 @@
 package com.jeeex.cardgame.shared.remote.entity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +15,9 @@ public class EntityTest {
 
 	@Inject
 	EntityManager em;
+	
+	@Inject
+	EntityManagerFactory emf;
 
 	@Before
 	public void init() {
@@ -28,5 +32,6 @@ public class EntityTest {
 	@After
 	public void cleanup() {
 		em.close();
+		emf.close();
 	}
 }

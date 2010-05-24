@@ -19,6 +19,7 @@ public interface DefaultResource extends ClientBundle {
 
 		String column_common();
 	}
+
 	@Source("style.css")
 	public MyStyle style();
 	
