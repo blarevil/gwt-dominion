@@ -26,6 +26,32 @@ import com.jeeex.cardgame.shared.entity.Message;
  */
 @Singleton
 public class MyEventBus extends DefaultEventBus {
+	{
+		/*
+		 * Steps to add new events to this class.
+		 * 
+		 * 1. Create a new private static final Type object for the new event.
+		 * Do not reuse the existing ones, even if their type signature are
+		 * identical - object identity is used to distinguish between the
+		 * registered listeners. Let the signature of this Type object be
+		 * Type<GenericHandler<Foo>>
+		 * 
+		 * 2. Create a new public bar(Foo event) method, calling fire(FooType,
+		 * event), where bar is the name of the event.
+		 * 
+		 * 3. Create a new public onBar(GenericHandler<Foo> handler) method,
+		 * calling mgr.addHandler(FooType, handler).
+		 * 
+		 * This comment was written in 2010-05-25
+		 * 
+		 * TODO(Jeeyoung Kim) - If you learn more about GWT generators, see if
+		 * you can automatically generate the content of the methods from the
+		 * stub interface.
+		 */
+	}
+	// Statically initiated type objects to distinguish the registered
+	// listeners.
+
 	private static final Type<GenericHandler<Widget>> CENTER_WIDGET = new Type<GenericHandler<Widget>>();
 	private static final Type<GenericHandler<String>> PRINTLN = new Type<GenericHandler<String>>();
 	private static final Type<GenericHandler<List<Message>>> MESSAGES = new Type<GenericHandler<List<Message>>>();
