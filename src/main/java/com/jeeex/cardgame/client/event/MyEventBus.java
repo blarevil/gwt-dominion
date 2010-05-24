@@ -11,9 +11,18 @@ import com.google.inject.Singleton;
 import com.jeeex.cardgame.shared.entity.Message;
 
 /**
- * The main eventbus.
+ * The main event bus.
  * <p>
- * All the global events should go through this event bus.
+ * Event bus is a design patter, where all the interactions between the
+ * components in the system interacts via the (singleton) event bus. Compared to
+ * the other approach - registering event listeners on each other - this
+ * approach results in decoupled dependency between the components.
+ * <p>
+ * One drawback of this approach is that the event bus can become complex,
+ * single nexus of all events in the system.
+ * 
+ * @author Jeeyoung Kim
+ * @since 2010-05-24
  */
 @Singleton
 public class MyEventBus extends DefaultEventBus {
