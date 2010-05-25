@@ -1,4 +1,4 @@
-package com.jeeex.cardgame.client.ui;
+package com.jeeex.cardgame.client.ui.chat;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

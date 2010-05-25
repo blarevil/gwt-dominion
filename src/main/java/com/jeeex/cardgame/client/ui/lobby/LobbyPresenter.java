@@ -4,7 +4,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
-import com.jeeex.cardgame.client.ui.ChatPresenter;
+import com.jeeex.cardgame.client.ui.chat.ChatPresenter;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.ui.widget.GameListPresenter;
 

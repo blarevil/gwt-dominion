@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:c="urn:import:com.jeeex.cardgame.client.ui"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:chat="urn:import:com.jeeex.cardgame.client.ui.chat"
 	xmlns:wgt="urn:import:com.jeeex.cardgame.client.ui.widget">
 	<ui:style>
 		.gamepanel {
@@ -28,7 +28,7 @@
 			<g:FlowPanel addStyleNames="{style.red}" ui:field="menuPanel"/>
 		</g:north>
 		<g:east size="200">
-			<c:ChatView ui:field="chatView" addStyleNames="{style.green}" />
+			<chat:ChatView ui:field="chatView" addStyleNames="{style.green}" />
 		</g:east>
 		<g:center>
 			<g:FlowPanel ui:field="centerPanel">

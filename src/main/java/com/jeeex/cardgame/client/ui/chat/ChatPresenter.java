@@ -1,4 +1,4 @@
-package com.jeeex.cardgame.client.ui;
+package com.jeeex.cardgame.client.ui.chat;
 
 import java.util.List;
 
