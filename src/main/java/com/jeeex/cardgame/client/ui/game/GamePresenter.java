@@ -1,9 +1,10 @@
-package com.jeeex.cardgame.client.ui;
+package com.jeeex.cardgame.client.ui.game;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.jeeex.cardgame.client.data.model.AuthTokenManager;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.ui.widget.GameListPresenter;

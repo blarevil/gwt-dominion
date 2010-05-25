@@ -227,9 +227,12 @@
 		</plugins>
 	</build>
 	<repositories>
+		<!-- 
+		Screw Gilead (at least for now).
 		<repository>
 			<id>gilead</id>
 			<url>https://gilead.svn.sourceforge.net/svnroot/gilead/gilead/maven-repo/</url>
 		</repository>
+		 -->
 	</repositories>
 </project>

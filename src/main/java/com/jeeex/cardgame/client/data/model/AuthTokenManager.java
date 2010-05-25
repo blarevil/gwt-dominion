@@ -1,4 +1,4 @@
-package com.jeeex.cardgame.client.ui;
+package com.jeeex.cardgame.client.data.model;
 
 import static com.jeeex.cardgame.client.event.GenericEvent.makeEvent;
 

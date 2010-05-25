@@ -10,9 +10,10 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.jeeex.cardgame.client.data.model.AuthTokenManager;
 import com.jeeex.cardgame.client.event.MyEventBus;
-import com.jeeex.cardgame.client.ui.AuthTokenManager;
-import com.jeeex.cardgame.client.ui.GamePresenter;
+import com.jeeex.cardgame.client.ui.game.GameMenuPresenter;
+import com.jeeex.cardgame.client.ui.game.GamePresenter;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.util.BaseCallback;
 import com.jeeex.cardgame.shared.entity.GameRoom;
@@ -55,7 +56,8 @@ public class GameListPresenter implements Presenter<GameListView> {
 			lobbySvc.joinGame(r, new BaseCallback<JoinGameResponse>());
 			// this should be done from the CALLBACK function.
 			ebus.setCenterWidget(gamePresenter.getView());
-			ebus.setMenuWidget(new Label("Menu has replaced."));
+			// comment this out for bit.
+			ebus.setMenuWidget(gameMenuPresenter.getView());
 			view.hidePopup();
 		}
 	}
@@ -112,6 +114,9 @@ public class GameListPresenter implements Presenter<GameListView> {
 
 	@Inject
 	private GamePresenter gamePresenter;
+
+	@Inject
+	private GameMenuPresenter gameMenuPresenter;
 
 	@Inject
 	GameListPresenter() {
