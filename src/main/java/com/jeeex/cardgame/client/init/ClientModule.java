@@ -4,10 +4,14 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.google.inject.TypeLiteral;
+import com.jeeex.cardgame.client.data.model.Binded;
+import com.jeeex.cardgame.client.data.model.UserState;
 import com.jeeex.cardgame.client.res.DefaultResource;
 import com.jeeex.cardgame.client.res.DefaultResource.GameListStyle;
 import com.jeeex.cardgame.client.res.DefaultResource.MyStyle;
 import com.jeeex.cardgame.client.ui.MainView;
+import com.jeeex.cardgame.shared.entity.AuthToken;
 
 public class ClientModule extends AbstractGinModule {
 
@@ -17,6 +21,8 @@ public class ClientModule extends AbstractGinModule {
 	protected void configure() {
 		bind(MainView.class).in(SINGLETON);
 		bind(DefaultResource.class).in(SINGLETON);
+		bind(new TypeLiteral<Binded<UserState>>(){}).in(SINGLETON);
+		bind(new TypeLiteral<Binded<AuthToken>>(){}).in(SINGLETON);
 	}
 
 	@Provides

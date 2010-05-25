@@ -6,11 +6,12 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.inject.Inject;
-import com.jeeex.cardgame.client.data.model.AuthTokenManager;
+import com.jeeex.cardgame.client.data.model.Binded;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.util.BaseCallback;
+import com.jeeex.cardgame.shared.entity.AuthToken;
 import com.jeeex.cardgame.shared.entity.ChatMessage;
 import com.jeeex.cardgame.shared.entity.Message;
 import com.jeeex.cardgame.shared.remote.message.MessageServiceAsync;
@@ -24,7 +25,7 @@ public class ChatPresenter implements Presenter<ChatView> {
 	}
 
 	@Inject
-	private AuthTokenManager tknMgr;
+	private Binded<AuthToken> tknMgr;
 	@Inject
 	private MessageServiceAsync msgSvc;
 	@Inject

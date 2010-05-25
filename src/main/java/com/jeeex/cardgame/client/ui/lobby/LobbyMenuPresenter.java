@@ -5,7 +5,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
-import com.jeeex.cardgame.client.data.model.AuthTokenManager;
+import com.jeeex.cardgame.client.data.model.Binded;
+import com.jeeex.cardgame.client.data.model.UserState;
 import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.ui.widget.GameListPresenter;
@@ -50,6 +51,7 @@ public class LobbyMenuPresenter implements Presenter<Widget> {
 		@Override
 		public void onSuccess(LoginResponse result) {
 			if (result.isSuccessful()) {
+				userState.set(UserState.IN_LOBBY);
 				tknMgr.set(result.getAuthToken());
 				Window.alert("Login completed. Token:" + result.getAuthToken());
 			} else {
@@ -65,13 +67,15 @@ public class LobbyMenuPresenter implements Presenter<Widget> {
 	private final GameListCallback gameListCallback = new GameListCallback();
 
 	@Inject
+	private Binded<UserState> userState;
+	@Inject
 	private LobbyMenuView view;
 	@Inject
 	private LobbyServiceAsync lobbySvc;
 	@Inject
 	private UserServiceAsync userSvc;
 	@Inject
-	private AuthTokenManager tknMgr;
+	private Binded<AuthToken> tknMgr;
 
 	private GameListPresenter gameListPresenter;
 

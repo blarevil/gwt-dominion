@@ -62,6 +62,9 @@ public class AnimationBuilder {
 	}
 
 	public Animation build() {
+		assert panel != null;
+		assert widget != null;
+
 		if (deltaSet) {
 			endLeft = startLeft + deltaLeft;
 			endTop = startTop + deltaTop;

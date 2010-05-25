@@ -10,12 +10,14 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.jeeex.cardgame.client.data.model.AuthTokenManager;
+import com.jeeex.cardgame.client.data.model.Binded;
+import com.jeeex.cardgame.client.data.model.UserState;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.ui.game.GameMenuPresenter;
 import com.jeeex.cardgame.client.ui.game.GamePresenter;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.util.BaseCallback;
+import com.jeeex.cardgame.shared.entity.AuthToken;
 import com.jeeex.cardgame.shared.entity.GameRoom;
 import com.jeeex.cardgame.shared.remote.lobby.JoinGameRequest;
 import com.jeeex.cardgame.shared.remote.lobby.JoinGameResponse;
@@ -58,6 +60,7 @@ public class GameListPresenter implements Presenter<GameListView> {
 
 			// TODO(Jeeyoung Kim): There should be some other state-managing
 			// variable that takes care of what views get injected to lobby.
+			userState.set(UserState.IN_GAME);
 			ebus.setCenterWidget(gamePresenter.getView());
 			ebus.setMenuWidget(gameMenuPresenter.getView());
 			view.hidePopup();
@@ -98,7 +101,7 @@ public class GameListPresenter implements Presenter<GameListView> {
 	JoinGameClick joinGameClick = new JoinGameClick();
 
 	@Inject
-	private AuthTokenManager tknMgr;
+	private Binded<AuthToken> tknMgr;
 
 	@Inject
 	private LobbyServiceAsync lobbySvc;
@@ -116,6 +119,9 @@ public class GameListPresenter implements Presenter<GameListView> {
 
 	@Inject
 	private GamePresenter gamePresenter;
+
+	@Inject
+	private Binded<UserState> userState;
 
 	@Inject
 	private GameMenuPresenter gameMenuPresenter;

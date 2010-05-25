@@ -20,6 +20,7 @@ public class MessageLoop implements Runnable {
 		public void onSuccess(WaitForMessageResponse result) {
 			// publish the message.
 			ebus.messageReceived(result.getMessages());
+			// TODO(Jeeyoung Kim) Dynamically increment the counter.
 			counter++;
 			async.waitForMessage(new WaitForMessageRequest(counter), callback);
 		}

@@ -4,11 +4,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.jeeex.cardgame.client.data.model.AuthTokenManager;
+import com.jeeex.cardgame.client.data.model.Binded;
 import com.jeeex.cardgame.client.event.MyEventBus;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.ui.widget.GameListPresenter;
 import com.jeeex.cardgame.client.util.BaseCallback;
+import com.jeeex.cardgame.shared.entity.AuthToken;
 import com.jeeex.cardgame.shared.remote.lobby.LeaveGameRequest;
 import com.jeeex.cardgame.shared.remote.lobby.LeaveGameResponse;
 import com.jeeex.cardgame.shared.remote.lobby.LobbyServiceAsync;
@@ -26,7 +27,7 @@ public class GamePresenter implements Presenter<GameView> {
 	private LobbyServiceAsync lobbySvc;
 	
 	@Inject
-	private AuthTokenManager tknMgr;
+	private Binded<AuthToken> tknMgr;
 
 	// not injected, to prevent circular dependency.
 	private GameListPresenter glPresenter;
