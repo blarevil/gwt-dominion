@@ -5,6 +5,6 @@
 		
 	</ui:style>
 	<c:FlowTableWidget>
-		<g:Button>Leave Game</g:Button>
+		<g:Button ui:field="leaveGameBtn">Leave Game</g:Button>
 	</c:FlowTableWidget>
 </ui:UiBinder> 

@@ -55,8 +55,10 @@ public class GameListPresenter implements Presenter<GameListView> {
 			// TODO(Jeeyoung Kim): Replace EmptyCallback with something else.
 			lobbySvc.joinGame(r, new BaseCallback<JoinGameResponse>());
 			// this should be done from the CALLBACK function.
+
+			// TODO(Jeeyoung Kim): There should be some other state-managing
+			// variable that takes care of what views get injected to lobby.
 			ebus.setCenterWidget(gamePresenter.getView());
-			// comment this out for bit.
 			ebus.setMenuWidget(gameMenuPresenter.getView());
 			view.hidePopup();
 		}
