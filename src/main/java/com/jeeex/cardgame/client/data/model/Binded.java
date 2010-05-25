@@ -8,6 +8,7 @@ import com.jeeex.cardgame.client.event.GenericHandler;
 
 /**
  * Represents a single variable that can be listened.
+ * <p>
  * 
  * @author Jeeyoung Kim
  * @since 2010-05-24
@@ -35,7 +36,11 @@ public class Binded<T> {
 		return value != null;
 	}
 
-	/** Add a handler to this.  */
+	public void clear() {
+		this.set(null);
+	}
+
+	/** Add a handler to this. */
 	public void addHandler(GenericHandler<T> handler) {
 		mgr.addHandler(binded, handler);
 	}

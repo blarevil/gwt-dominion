@@ -12,7 +12,18 @@ import com.jeeex.cardgame.shared.entity.User;
 import com.jeeex.cardgame.shared.remote.Authenticated;
 import com.jeeex.cardgame.shared.remote.InvalidTokenException;
 
-/** All methods in this class must be under transaction. */
+/**
+ * Provides utility methods to check the validity of the provided
+ * {@link AuthToken}. The method {@link #getUser(AuthToken)} can be used to
+ * extract the authenticated user from the provided {@link AuthToken}.
+ * <p>
+ * All methods in this class must be under transaction.
+ * <p>
+ * TODO(Jeeyoung Kim): Write tests for this class.
+ * 
+ * @author Jeeyoung Kim
+ * @since 2010-05-25
+ */
 @RequestScoped
 public class AuthenticationChecker {
 

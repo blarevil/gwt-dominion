@@ -21,8 +21,12 @@ public class ClientModule extends AbstractGinModule {
 	protected void configure() {
 		bind(MainView.class).in(SINGLETON);
 		bind(DefaultResource.class).in(SINGLETON);
-		bind(new TypeLiteral<Binded<UserState>>(){}).in(SINGLETON);
-		bind(new TypeLiteral<Binded<AuthToken>>(){}).in(SINGLETON);
+		bind(new TypeLiteral<Binded<UserState>>() {
+		}).in(SINGLETON);
+		// optimally, code should NOT rely on this variable - it should listen
+		// to the changes to UserState.
+		bind(new TypeLiteral<Binded<AuthToken>>() {
+		}).in(SINGLETON);
 	}
 
 	@Provides

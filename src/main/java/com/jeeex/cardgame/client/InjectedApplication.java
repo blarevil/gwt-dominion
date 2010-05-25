@@ -39,13 +39,13 @@ public class InjectedApplication implements Runnable {
 
 	@Override
 	public void run() {
-		// default state at LOGGED_OUT.
+		// set base user state.
 		userState.set(UserState.LOGGED_OUT);
-		// for debubging purpose.
+		// register handler for debugging.
 		userState.addHandler(new GenericHandler<UserState>() {
 			@Override
-			public void onEvent(UserState event) {
-				ebus.println("UserState:" + event);
+			public void onEvent(UserState state) {
+				ebus.println("new userstate:" + state);
 			}
 		});
 

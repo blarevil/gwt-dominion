@@ -137,11 +137,12 @@ public class LobbyMenuPresenter implements Presenter<Widget> {
 				LogoutRequest req = new LogoutRequest();
 				req.setAuthToken(tknMgr.get());
 				tknMgr.set(null);
+				userState.set(UserState.LOGGED_OUT);
 				userSvc.logout(req, new BaseCallback<LogoutResponse>());
 			}
 		});
 
-		// initialize creage game
+		// initialize create game
 		view.getCreateGameButton().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
