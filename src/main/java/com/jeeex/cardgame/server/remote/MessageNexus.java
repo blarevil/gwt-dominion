@@ -65,8 +65,9 @@ public class MessageNexus {
 	}
 
 	/**
-	 * Set the internal counter of MessageNexus. TODO(Jeeyoung Kim) refactor
-	 * this to a provider.
+	 * Set the internal counter of MessageNexus.
+	 * <p>
+	 * TODO(Jeeyoung Kim) refactor this to a provider.
 	 * */
 	private void initCounter() {
 		EntityManager e = emp.get();

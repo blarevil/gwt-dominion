@@ -43,7 +43,6 @@ public class LobbyView extends Composite {
 	}
 
 	public void setMenuWidget(Widget widget) {
-		// TODO(Jeeyoung Kim): Implement this.
 		ClientUtil.removeAllChildren(menuPanel);
 		menuPanel.add(widget);
 	}

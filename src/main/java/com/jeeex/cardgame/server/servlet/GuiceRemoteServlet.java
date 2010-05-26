@@ -42,8 +42,6 @@ public class GuiceRemoteServlet extends RemoteServiceServlet {
 					+ " in the processCall(String) method.", ex);
 			return RPC.encodeResponseForFailure(null, ex);
 		} catch (RuntimeException ex) {
-			// TODO(Jeeyoung Kim):
-			// cache the annonymous logger, because it is prone to memory leak.
 			logger.log(Level.WARNING, "Unexpected error.", ex);
 			// other runtime exceptions - at least log them.
 			log("Unexpected exception occurred.", ex);

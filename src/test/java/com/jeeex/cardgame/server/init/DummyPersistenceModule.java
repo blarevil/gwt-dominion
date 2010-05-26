@@ -13,7 +13,7 @@ import com.google.inject.servlet.RequestScoped;
 /**
  * Both {@link EntityManager} and {@link EntityManagerFactory} are bound as
  * singletons. <br>
- * TODO(Jeeyoung Kim): We don't have use to use MySQL all the time, especially
+ * TODO(Jeeyoung Kim) We don't have use to use MySQL all the time, especially
  * when the test doesn't require it...
  */
 public class DummyPersistenceModule extends AbstractModule {

@@ -314,7 +314,7 @@ public class GameLogic {
 	}
 
 	public void run(Command command) {
-		// (TODO:Jeeyoung Kim) Add check for command != null.
+		// TODO(Jeeyoung Kim) Add check for command != null.
 		// using null commands to "proceed to next state" is error prone.
 		switch (gs.getState()) {
 		case INIT:

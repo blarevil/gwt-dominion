@@ -51,7 +51,7 @@ public class GameListPresenter implements Presenter<GameListView> {
 			JoinGameRequest r = new JoinGameRequest();
 			r.setAuthToken(tknMgr.get());
 			r.setGameRoom(selected);
-			// TODO(Jeeyoung Kim): Replace EmptyCallback with something else.
+			// TODO(Jeeyoung Kim) Replace EmptyCallback with something else.
 			lobbySvc.joinGame(r, new BaseCallback<JoinGameResponse>());
 			// this should be done from the CALLBACK function.
 			userState.set(UserState.IN_GAME);

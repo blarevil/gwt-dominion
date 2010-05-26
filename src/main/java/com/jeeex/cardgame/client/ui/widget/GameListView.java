@@ -9,7 +9,8 @@ import com.jeeex.cardgame.client.res.DefaultResource.GameListStyle;
 
 public class GameListView extends Composite {
 	/** Underlying table object. */
-	// TODO - change the visibility of this object.
+	// TODO(Jeeyoung Kim) change the visibility of this object - encapsulate
+	// the logic, so the presenter doesn't need direct access to this object.
 	final FlexTable table;
 
 	/** TODO(Jeeyoung Kim) Figure out what I'm going to do with this. */

@@ -19,7 +19,7 @@ import com.jeeex.cardgame.shared.remote.InvalidTokenException;
  * <p>
  * All methods in this class must be under transaction.
  * <p>
- * TODO(Jeeyoung Kim): Write tests for this class.
+ * TODO(Jeeyoung Kim) Write tests for this class.
  * 
  * @author Jeeyoung Kim
  * @since 2010-05-25

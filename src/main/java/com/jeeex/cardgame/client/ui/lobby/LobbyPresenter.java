@@ -41,6 +41,7 @@ public class LobbyPresenter implements Presenter<LobbyView> {
 	@Override
 	public void init() {
 		// cascade-init presenters.
+		// TODO(Jeeyoung Kim) Remove cascade initializations
 		chatPresenter.init();
 
 		// initialize view.

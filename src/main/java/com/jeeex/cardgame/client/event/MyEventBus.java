@@ -44,9 +44,9 @@ public class MyEventBus extends DefaultEventBus {
 		 * 
 		 * This comment was written in 2010-05-25
 		 * 
-		 * TODO(Jeeyoung Kim) - If you learn more about GWT generators, see if
-		 * you can automatically generate the content of the methods from the
-		 * stub interface.
+		 * TODO(Jeeyoung Kim) If I learn more about GWT generators, see if you
+		 * can automatically generate the content of the methods from the stub
+		 * interface.
 		 */
 	}
 	// Statically initiated type objects to distinguish the registered

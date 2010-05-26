@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setUsername(name);
 		{
-			// TODO(Jeeyoung Kim): try to do AOP with transaction management.
+			// TODO(Jeeyoung Kim) try to do AOP with transaction management.
 			// Persist the user.
 			em.getTransaction().begin();
 			try {
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 			}
 
 			token.setUser(user);
-			// TODO(Jeeyoung Kim): Need better token generation scheme.
+			// TODO(Jeeyoung Kim) Need better token generation scheme.
 			token.setTokenName(String.valueOf(System.currentTimeMillis()));
 			em.persist(token);
 		}

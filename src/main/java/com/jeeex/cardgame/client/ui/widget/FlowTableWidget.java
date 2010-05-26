@@ -39,7 +39,8 @@ public class FlowTableWidget extends Composite implements HasWidgets {
 
 	@Override
 	public boolean remove(Widget w) {
-		// TODO: Implement this.
+		// TODO(Jeeyoung Kim) Implement this
+		assert false;
 		return false;
 	}
 
