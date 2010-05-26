@@ -1,13 +1,17 @@
 package com.jeeex.cardgame.client.ui.lobby;
 
+import static com.jeeex.cardgame.client.data.model.UserState.IN_LOBBY;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.jeeex.cardgame.client.data.model.Binded;
 import com.jeeex.cardgame.client.data.model.UserState;
 import com.jeeex.cardgame.client.event.GenericHandler;
+import com.jeeex.cardgame.client.ui.WidgetTool;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.ui.widget.GameListPresenter;
 import com.jeeex.cardgame.client.util.BaseCallback;
@@ -26,6 +30,7 @@ import com.jeeex.cardgame.shared.remote.user.LogoutResponse;
 import com.jeeex.cardgame.shared.remote.user.UserServiceAsync;
 
 /** Presenter for the menu bar in the lobby screen. */
+@Singleton
 public class LobbyMenuPresenter implements Presenter<Widget> {
 	private final class CreateUserCallback extends
 			BaseCallback<CreateUserResponse> {
@@ -53,7 +58,6 @@ public class LobbyMenuPresenter implements Presenter<Widget> {
 			if (result.isSuccessful()) {
 				userState.set(UserState.IN_LOBBY);
 				tknMgr.set(result.getAuthToken());
-				Window.alert("Login completed. Token:" + result.getAuthToken());
 			} else {
 				Window.alert("Login failed.");
 			}
@@ -76,8 +80,10 @@ public class LobbyMenuPresenter implements Presenter<Widget> {
 	private UserServiceAsync userSvc;
 	@Inject
 	private Binded<AuthToken> tknMgr;
-
+	@Inject
 	private GameListPresenter gameListPresenter;
+	@Inject
+	private WidgetTool wt;
 
 	public void setGameListPresenter(GameListPresenter glp) {
 		gameListPresenter = glp;
@@ -94,6 +100,7 @@ public class LobbyMenuPresenter implements Presenter<Widget> {
 
 	@Override
 	public void init() {
+		wt.showMenuOnState(IN_LOBBY, this);
 		// Assertions
 		assert gameListPresenter != null;
 
@@ -137,7 +144,7 @@ public class LobbyMenuPresenter implements Presenter<Widget> {
 				LogoutRequest req = new LogoutRequest();
 				req.setAuthToken(tknMgr.get());
 				tknMgr.set(null);
-				userState.set(UserState.LOGGED_OUT);
+				userState.set(IN_LOBBY);
 				userSvc.logout(req, new BaseCallback<LogoutResponse>());
 			}
 		});
@@ -157,14 +164,15 @@ public class LobbyMenuPresenter implements Presenter<Widget> {
 			}
 		});
 
-		// bind token.
+		// bind authentication status
 		tknMgr.addHandler(new GenericHandler<AuthToken>() {
 			@Override
 			public void onEvent(AuthToken token) {
+				boolean loggedIn = (token != null);
 				view.getAuthTokenLabel().setText(String.valueOf(token));
-				boolean loggedIn = token != null;
 				view.getLoginButton().setEnabled(!loggedIn);
 				view.getLogoutButton().setEnabled(loggedIn);
+				view.getCreateGameButton().setEnabled(loggedIn);
 			}
 		});
 	}

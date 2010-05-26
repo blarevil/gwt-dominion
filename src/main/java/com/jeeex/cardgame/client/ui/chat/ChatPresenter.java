@@ -79,5 +79,12 @@ public class ChatPresenter implements Presenter<ChatView> {
 				}
 			}
 		});
+		
+		tknMgr.addHandler(new GenericHandler<AuthToken>() {
+			@Override
+			public void onEvent(AuthToken event) {
+				view.getChatBox().setEnabled(event != null);
+			}
+		});
 	}
 }

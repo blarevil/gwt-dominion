@@ -1,6 +1,5 @@
 package com.jeeex.cardgame.client.data.msgloop;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.jeeex.cardgame.client.event.MyEventBus;
@@ -13,7 +12,8 @@ public class MessageLoop implements Runnable {
 	public class Callback implements AsyncCallback<WaitForMessageResponse> {
 		@Override
 		public void onFailure(Throwable caught) {
-			Window.alert("Failure during XHR - terminating.");
+			// this error message is annoying.
+			// Window.alert("Failure during XHR - terminating.");
 		}
 
 		@Override

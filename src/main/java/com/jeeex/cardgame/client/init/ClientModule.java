@@ -2,6 +2,8 @@ package com.jeeex.cardgame.client.init;
 
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
@@ -15,6 +17,16 @@ import com.jeeex.cardgame.shared.entity.AuthToken;
 
 public class ClientModule extends AbstractGinModule {
 
+	public static class AuthTokenProvider implements Provider<AuthToken> {
+		@Inject
+		Binded<AuthToken> var;
+
+		@Override
+		public AuthToken get() {
+			return var.get();
+		}
+	}
+
 	private static final Class<Singleton> SINGLETON = Singleton.class;
 
 	@Override
@@ -27,6 +39,8 @@ public class ClientModule extends AbstractGinModule {
 		// to the changes to UserState.
 		bind(new TypeLiteral<Binded<AuthToken>>() {
 		}).in(SINGLETON);
+
+		bind(AuthToken.class).toProvider(AuthTokenProvider.class);
 	}
 
 	@Provides

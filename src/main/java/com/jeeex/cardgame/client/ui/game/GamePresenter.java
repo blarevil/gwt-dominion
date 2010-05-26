@@ -1,18 +1,15 @@
 package com.jeeex.cardgame.client.ui.game;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import static com.jeeex.cardgame.client.data.model.UserState.IN_GAME;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.jeeex.cardgame.client.data.model.Binded;
+import com.jeeex.cardgame.client.data.model.UserState;
+import com.jeeex.cardgame.client.event.GenericHandler;
 import com.jeeex.cardgame.client.event.MyEventBus;
+import com.jeeex.cardgame.client.ui.WidgetTool;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
-import com.jeeex.cardgame.client.ui.widget.GameListPresenter;
-import com.jeeex.cardgame.client.util.BaseCallback;
-import com.jeeex.cardgame.shared.entity.AuthToken;
-import com.jeeex.cardgame.shared.remote.lobby.LeaveGameRequest;
-import com.jeeex.cardgame.shared.remote.lobby.LeaveGameResponse;
-import com.jeeex.cardgame.shared.remote.lobby.LobbyServiceAsync;
 
 @Singleton
 public class GamePresenter implements Presenter<GameView> {
@@ -22,15 +19,12 @@ public class GamePresenter implements Presenter<GameView> {
 
 	@Inject
 	private MyEventBus ebus;
-	
-	@Inject
-	private LobbyServiceAsync lobbySvc;
-	
-	@Inject
-	private Binded<AuthToken> tknMgr;
 
-	// not injected, to prevent circular dependency.
-	private GameListPresenter glPresenter;
+	@Inject
+	private Binded<UserState> userState;
+	
+	@Inject
+	private WidgetTool wt;
 
 	@Inject
 	public GamePresenter() {
@@ -43,21 +37,15 @@ public class GamePresenter implements Presenter<GameView> {
 
 	@Override
 	public void init() {
-		// preconditions.
-		assert glPresenter != null;
+		wt.showCenterWidgetOnState(IN_GAME, this);
 
-		view.getLeaveButton().addClickHandler(new ClickHandler() {
+		userState.addHandler(new GenericHandler<UserState>() {
 			@Override
-			public void onClick(ClickEvent event) {
-				LeaveGameRequest req = new LeaveGameRequest();
-				req.setAuthToken(tknMgr.get());
-				lobbySvc.leaveGame(req, new BaseCallback<LeaveGameResponse>());
-				ebus.setCenterWidget(glPresenter.getView());
+			public void onEvent(UserState event) {
+				if (event == UserState.IN_GAME) {
+					ebus.setCenterWidget(getView());
+				}
 			}
 		});
-	}
-
-	public void setGameListPresenter(GameListPresenter glp) {
-		glPresenter = glp;
 	}
 }

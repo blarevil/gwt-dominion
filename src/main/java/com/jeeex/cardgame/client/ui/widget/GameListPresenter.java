@@ -12,9 +12,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.jeeex.cardgame.client.data.model.Binded;
 import com.jeeex.cardgame.client.data.model.UserState;
-import com.jeeex.cardgame.client.event.MyEventBus;
-import com.jeeex.cardgame.client.ui.game.GameMenuPresenter;
-import com.jeeex.cardgame.client.ui.game.GamePresenter;
 import com.jeeex.cardgame.client.ui.generic.Presenter;
 import com.jeeex.cardgame.client.util.BaseCallback;
 import com.jeeex.cardgame.shared.entity.AuthToken;
@@ -57,12 +54,7 @@ public class GameListPresenter implements Presenter<GameListView> {
 			// TODO(Jeeyoung Kim): Replace EmptyCallback with something else.
 			lobbySvc.joinGame(r, new BaseCallback<JoinGameResponse>());
 			// this should be done from the CALLBACK function.
-
-			// TODO(Jeeyoung Kim): There should be some other state-managing
-			// variable that takes care of what views get injected to lobby.
 			userState.set(UserState.IN_GAME);
-			ebus.setCenterWidget(gamePresenter.getView());
-			ebus.setMenuWidget(gameMenuPresenter.getView());
 			view.hidePopup();
 		}
 	}
@@ -115,16 +107,7 @@ public class GameListPresenter implements Presenter<GameListView> {
 	private GameListView view;
 
 	@Inject
-	private MyEventBus ebus;
-
-	@Inject
-	private GamePresenter gamePresenter;
-
-	@Inject
 	private Binded<UserState> userState;
-
-	@Inject
-	private GameMenuPresenter gameMenuPresenter;
 
 	@Inject
 	GameListPresenter() {
@@ -139,10 +122,6 @@ public class GameListPresenter implements Presenter<GameListView> {
 	public void init() {
 		// init the view.
 		view.setPopupPanel(popupPanel);
-
-		// cascade init sequence
-		gamePresenter.setGameListPresenter(this);
-		gamePresenter.init();
 	}
 
 	public void setSelected(GameRoom g) {

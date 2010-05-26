@@ -6,9 +6,7 @@
 	</ui:style>
 	<g:DockLayoutPanel unit="PCT" width="100%" height="100%">
 		<g:north size="50">
-			<g:HTMLPanel>
-				<g:Button ui:field="leaveBtn">leave</g:Button>
-			</g:HTMLPanel>
+			<g:Label>NORTH PANEL</g:Label>
 		</g:north>
 		<g:center>
 			<g:Label>SOUTH PANEL</g:Label>

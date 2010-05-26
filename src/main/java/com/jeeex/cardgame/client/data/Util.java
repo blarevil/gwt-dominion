@@ -7,6 +7,7 @@ import java.util.Map;
 public class Util {
 
 	private Util() {
+		// private constructor to prevent initialization.
 	}
 
 	/** Aggregate Collection of cards into a collection. */

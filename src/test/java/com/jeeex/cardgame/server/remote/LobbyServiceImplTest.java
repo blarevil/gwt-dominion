@@ -1,6 +1,6 @@
 package com.jeeex.cardgame.server.remote;
 
-import static com.jeeex.cardgame.server.init.TestUtil.injector;
+import static com.jeeex.cardgame.server.init.Util.injector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
